@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sushi LM — O Segredo de Rudge Ramos</title>
-  <meta name="description" content="Um rodízio de 4,8 estrelas a R$ 80–100 no ABC. Sem ambiente elaborado, mas com o salmão mais fresco e farto do estado. Quem conhece a Rua Afonsina não conta pra ninguém.">
-  <meta name="theme-color" content="#101315">
+  <meta name="description" content="4,8 estrelas no Google Maps. R$ 80 a R$ 100 por pessoa. Apenas 330 avaliações. O rodízio mais honesto e bem guardado de São Bernardo do Campo.">
+  <meta name="theme-color" content="#0C0E10">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Sushi LM — O Segredo Bem Guardado de Rudge Ramos">
-  <meta property="og:description" content="4,8 estrelas no Google Maps e o rodízio de melhor custo-benefício de São Paulo. R. Afonsina, 244.">
+  <meta property="og:title" content="Sushi LM — O Segredo de Rudge Ramos">
+  <meta property="og:description" content="Um rodízio de 4,8 estrelas a R$ 80–100 no ABC. A nota condiz com o prato.">
   <meta property="og:type" content="restaurant">
   <!-- DEPLOY STEP -->
   <meta property="og:image" content="imagens/imgi_38_630043211_18082800017258427_7863822594627027080_n.webp">
@@ -46,22 +46,22 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #0F1214;
-      --bg-card: #15191C;
-      --bg-subtle: #1C2226;
-      --border: rgba(245, 245, 242, 0.08);
-      --border-strong: rgba(245, 245, 242, 0.16);
-      --text: #F1F2EE;
-      --text-muted: #9BA3A9;
-      --text-faint: #60686E;
+      --bg: #0C0E10;
+      --bg-surface: #121518;
+      --bg-muted: #181C20;
+      --border: rgba(240, 242, 238, 0.08);
+      --border-strong: rgba(240, 242, 238, 0.16);
+      --text: #F0F2EE;
+      --text-muted: #969EA4;
+      --text-faint: #5C646A;
       --salmon: #FF5A36;
-      --salmon-soft: rgba(255, 90, 54, 0.12);
-      --gold: #D4A359;
-      --font-serif: 'Newsreader', serif;
+      --salmon-soft: rgba(255, 90, 54, 0.1);
+      --amber: #C89950;
+      --font-serif: 'Newsreader', Georgia, serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -78,13 +78,13 @@
     }
 
     ::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
     ::-webkit-scrollbar-track {
       background: var(--bg);
     }
     ::-webkit-scrollbar-thumb {
-      background: var(--bg-subtle);
+      background: var(--bg-muted);
       border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover {
@@ -108,8 +108,8 @@
     body {
       background-color: var(--bg);
       color: var(--text);
-      cursor: default;
       line-height: 1.6;
+      cursor: default;
     }
 
     .skip-link {
@@ -132,8 +132,8 @@
       top: 16px;
     }
 
-    /* Top Navigation: Discreta, editorial */
-    .top-nav {
+    /* Top Navigation: Discreta, editorial e sem ruído */
+    .nav {
       position: fixed;
       top: 0;
       left: 0;
@@ -142,48 +142,42 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 clamp(20px, 5vw, 60px);
+      padding: 0 clamp(20px, 6vw, 80px);
       z-index: 100;
-      background: rgba(15, 18, 20, 0.88);
+      background: rgba(12, 14, 16, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-left {
+    .nav-brand {
       display: flex;
       align-items: baseline;
       gap: 12px;
+      text-decoration: none;
+      color: var(--text);
     }
 
-    .brand-name {
+    .brand-title {
       font-family: var(--font-serif);
       font-size: 1.25rem;
       font-weight: 500;
       letter-spacing: -0.01em;
-      color: var(--text);
-      text-decoration: none;
     }
 
-    .location-stamp {
+    .brand-coord {
       font-size: 0.75rem;
       color: var(--text-faint);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       font-weight: 600;
     }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .secret-badge {
+    .nav-status {
       font-size: 0.78rem;
-      color: var(--gold);
-      background: rgba(212, 163, 89, 0.1);
-      border: 1px solid rgba(212, 163, 89, 0.25);
+      color: var(--amber);
+      background: rgba(200, 153, 80, 0.1);
+      border: 1px solid rgba(200, 153, 80, 0.25);
       padding: 4px 12px;
       border-radius: 20px;
       font-weight: 600;
@@ -191,12 +185,12 @@
       align-items: center;
       gap: 6px;
     }
-    .secret-badge::before {
+    .nav-status::before {
       content: "●";
       font-size: 0.6rem;
     }
 
-    .btn-quiet {
+    .btn-contact-quiet {
       background: transparent;
       color: var(--text);
       border: 1px solid var(--border-strong);
@@ -204,109 +198,141 @@
       font-weight: 600;
       padding: 0 16px;
       min-height: 40px;
-      border-radius: 6px;
+      border-radius: 4px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
       transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
     }
-    .btn-quiet:hover {
-      background: var(--bg-card);
+    .btn-contact-quiet:hover {
+      background: var(--bg-surface);
       border-color: var(--text-muted);
     }
 
-    /* SEÇÃO 1: O ACHADO (Hero Confidencial) */
-    .section-hero {
-      position: relative;
-      padding-top: 140px;
+    /* SEÇÃO 1: O PROTOCOLO (O Paradoxo Silencioso) */
+    .section-protocol {
+      padding-top: 150px;
       padding-bottom: 90px;
-      padding-left: clamp(20px, 5vw, 60px);
-      padding-right: clamp(20px, 5vw, 60px);
-      max-width: 1200px;
+      padding-left: clamp(20px, 6vw, 80px);
+      padding-right: clamp(20px, 6vw, 80px);
+      max-width: 1040px;
       margin: 0 auto;
     }
 
-    .hero-meta-line {
+    .protocol-meta {
       display: flex;
       align-items: center;
-      gap: 16px;
-      font-size: 0.85rem;
+      gap: 12px;
+      font-size: 0.82rem;
       color: var(--text-faint);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       font-weight: 600;
     }
-    .hero-meta-line span {
+    .protocol-meta span {
       color: var(--salmon);
     }
 
-    .hero-heading {
+    .protocol-statement {
       font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
       font-weight: 400;
-      line-height: 1.15;
+      line-height: 1.18;
       letter-spacing: -0.02em;
-      max-width: 22ch;
       color: var(--text);
     }
-    .hero-heading em {
+    .protocol-statement em {
       font-style: italic;
-      color: var(--gold);
+      color: var(--amber);
     }
 
-    .hero-lead {
-      margin-top: 24px;
+    .protocol-lead {
+      margin-top: 28px;
       font-size: clamp(1.05rem, 1.6vw, 1.25rem);
       color: var(--text-muted);
-      max-width: 48ch;
+      max-width: 52ch;
       line-height: 1.65;
     }
 
-    /* Moldura documental da foto */
-    .hero-document-frame {
-      margin-top: 48px;
-      position: relative;
+    /* SEÇÃO 2: A EVIDÊNCIA FÍSICA */
+    .section-evidence-hero {
+      padding: 40px clamp(20px, 6vw, 80px) 110px clamp(20px, 6vw, 80px);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .evidence-frame {
+      border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: var(--bg-surface);
     }
 
-    .document-img {
+    .evidence-hero-img {
       width: 100%;
-      height: clamp(340px, 55vh, 640px);
+      height: clamp(360px, 58vh, 620px);
       object-fit: cover;
-      object-position: center 30%;
+      object-position: center 32%;
       display: block;
-      filter: saturate(1.05) contrast(1.02);
+      filter: saturate(1.05);
     }
 
-    .document-caption {
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
+    .evidence-hero-bar {
+      padding: 24px 32px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
       align-items: center;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      background: var(--bg-card);
+      background: var(--bg-surface);
       border-top: 1px solid var(--border);
     }
-    .caption-note {
-      color: var(--text-faint);
+
+    .evidence-quote {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
       font-style: italic;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .evidence-quote-source {
+      font-size: 0.82rem;
+      color: var(--text-faint);
+      margin-top: 6px;
+      font-style: normal;
     }
 
-    /* SEÇÃO 2: A DESCONFIANÇA SUPERADA */
+    .evidence-specs {
+      display: flex;
+      gap: 24px;
+      justify-content: flex-end;
+      border-left: 1px solid var(--border);
+      padding-left: 24px;
+    }
+    .spec-node .val {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--salmon);
+      line-height: 1;
+    }
+    .spec-node .lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* SEÇÃO 3: A CONFISSÃO (Por que é tão barato?) */
     .section-confession {
-      padding: 110px clamp(20px, 5vw, 60px);
-      background: var(--bg-card);
+      padding: 110px clamp(20px, 6vw, 80px);
+      background: var(--bg-surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
 
-    .confession-inner {
+    .confession-grid {
       max-width: 1040px;
       margin: 0 auto;
       display: grid;
@@ -315,25 +341,25 @@
       align-items: center;
     }
 
-    .room-photo-wrapper {
+    .salon-frame {
       position: relative;
-      border-radius: 8px;
+      border-radius: 6px;
       overflow: hidden;
       border: 1px solid var(--border);
     }
 
-    .room-photo {
+    .salon-img {
       width: 100%;
       height: 480px;
       object-fit: cover;
       display: block;
     }
 
-    .room-tag {
+    .salon-tag {
       position: absolute;
       bottom: 16px;
       left: 16px;
-      background: rgba(15, 18, 20, 0.9);
+      background: rgba(12, 14, 16, 0.9);
       border: 1px solid var(--border);
       color: var(--text-muted);
       padding: 6px 12px;
@@ -342,298 +368,169 @@
       backdrop-filter: blur(8px);
     }
 
-    .confession-text {
+    .confession-narrative {
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      gap: 28px;
     }
 
-    .quote-box {
-      border-left: 2px solid var(--salmon);
-      padding-left: 24px;
-    }
-
-    .quote-statement {
+    .confession-title {
       font-family: var(--font-serif);
-      font-size: clamp(1.25rem, 2vw, 1.55rem);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
       font-weight: 400;
-      line-height: 1.45;
-      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .confession-quote-block {
+      border-left: 2px solid var(--amber);
+      padding-left: 20px;
+    }
+    .confession-quote-text {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
       font-style: italic;
+      color: var(--text);
+      line-height: 1.5;
     }
-
-    .quote-author {
-      margin-top: 12px;
-      font-size: 0.85rem;
+    .confession-author {
+      font-size: 0.82rem;
       color: var(--text-faint);
-      font-weight: 600;
+      margin-top: 8px;
     }
 
-    .confession-insight {
+    .confession-body {
       font-size: 1.05rem;
       color: var(--text-muted);
       line-height: 1.65;
     }
-    .confession-insight strong {
+    .confession-body strong {
       color: var(--text);
       font-weight: 600;
     }
 
-    /* SEÇÃO 3: O PARADOXO DE SÃO PAULO */
-    .section-paradox {
-      padding: 120px clamp(20px, 5vw, 60px);
+    /* SEÇÃO 4: AS TRÊS TESTEMUNHAS */
+    .section-witness {
+      padding: 120px clamp(20px, 6vw, 80px);
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .paradox-header {
-      margin-bottom: 50px;
+    .witness-header {
+      margin-bottom: 48px;
     }
-
-    .section-label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--salmon);
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .paradox-title {
+    .witness-title {
       font-family: var(--font-serif);
-      font-size: clamp(2rem, 3.8vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.2;
-    }
-
-    .paradox-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 32px;
-      align-items: stretch;
-    }
-
-    .paradox-card {
-      padding: 36px 32px;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .paradox-card.capital {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      opacity: 0.75;
-    }
-
-    .paradox-card.lm {
-      background: var(--bg-subtle);
-      border: 1px solid var(--salmon);
-      box-shadow: 0 10px 40px rgba(255, 90, 54, 0.08);
-      position: relative;
-    }
-
-    .card-kicker {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-faint);
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
-    .paradox-card.lm .card-kicker {
-      color: var(--salmon);
-    }
-
-    .card-price {
-      font-family: var(--font-serif);
-      font-size: 2.8rem;
-      font-weight: 600;
-      margin-bottom: 24px;
-      line-height: 1;
-    }
-
-    .card-items {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    .card-items li {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-
-    .paradox-card.capital .card-items li::before {
-      content: "—";
-      color: var(--text-faint);
-    }
-    .paradox-card.lm .card-items li::before {
-      content: "✓";
-      color: var(--salmon);
-      font-weight: bold;
-    }
-
-    .reviewer-verdict {
-      margin-top: 36px;
-      padding: 24px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-family: var(--font-serif);
-      font-size: 1.15rem;
-      font-style: italic;
-      color: var(--text);
-      text-align: center;
-    }
-
-    /* SEÇÃO 4: O ARQUIVO DE EVIDÊNCIAS */
-    .section-evidence {
-      padding: 110px clamp(20px, 5vw, 60px);
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-    }
-
-    .evidence-header {
-      max-width: 1100px;
-      margin: 0 auto 48px auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .evidence-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
       font-weight: 400;
     }
-
-    .evidence-sub {
+    .witness-sub {
       color: var(--text-muted);
-      font-size: 0.95rem;
-      max-width: 44ch;
+      font-size: 0.98rem;
+      margin-top: 8px;
+      max-width: 46ch;
     }
 
-    .evidence-grid {
-      max-width: 1100px;
-      margin: 0 auto;
+    .witness-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
-    .evidence-item {
-      background: var(--bg);
+    .witness-card {
+      background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: 6px;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
     }
 
-    .evidence-img-box {
-      position: relative;
-      height: 320px;
+    .witness-img-wrap {
+      height: 300px;
       overflow: hidden;
     }
-
-    .evidence-img {
+    .witness-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.4s var(--ease);
     }
-    .evidence-item:hover .evidence-img {
+    .witness-card:hover .witness-img {
       transform: scale(1.03);
     }
 
-    .evidence-info {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .witness-content {
+      padding: 24px;
     }
-
-    .evidence-tag {
+    .witness-label {
       font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       color: var(--salmon);
       font-weight: 700;
+      margin-bottom: 6px;
     }
-
-    .evidence-name {
+    .witness-name {
       font-family: var(--font-serif);
-      font-size: 1.25rem;
-      font-weight: 600;
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 8px;
     }
-
-    .evidence-desc {
-      font-size: 0.88rem;
+    .witness-desc {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     /* SEÇÃO 5: O CÍRCULO DOS 330 */
     .section-circle {
-      padding: 120px clamp(20px, 5vw, 60px);
-      max-width: 860px;
-      margin: 0 auto;
+      padding: 110px clamp(20px, 6vw, 80px);
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       text-align: center;
     }
 
-    .circle-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-strong);
-      border-radius: 12px;
-      padding: 56px 40px;
-      position: relative;
+    .circle-wrap {
+      max-width: 760px;
+      margin: 0 auto;
     }
 
-    .circle-counter-wrap {
-      margin-bottom: 24px;
-      display: inline-flex;
-      align-items: baseline;
-      gap: 8px;
-    }
-
-    .circle-counter {
+    .circle-stat {
       font-family: var(--font-serif);
-      font-size: clamp(3.5rem, 8vw, 5.5rem);
-      font-weight: 600;
-      color: var(--text);
+      font-size: clamp(4rem, 9vw, 6.5rem);
+      font-weight: 400;
       line-height: 1;
-    }
-
-    .circle-label {
-      font-size: 1.15rem;
-      color: var(--gold);
-      font-weight: 600;
+      color: var(--amber);
+      margin-bottom: 12px;
     }
 
     .circle-title {
       font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
       font-weight: 400;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      color: var(--text);
     }
 
     .circle-desc {
       font-size: 1.05rem;
       color: var(--text-muted);
-      max-width: 48ch;
-      margin: 0 auto 36px auto;
-      line-height: 1.6;
+      line-height: 1.65;
+      margin-bottom: 32px;
     }
 
-    .btn-discover {
+    .circle-action-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 28px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      max-width: 520px;
+    }
+
+    .btn-register-discovery {
       background: var(--salmon);
       color: #FFF;
       font-family: var(--font-sans);
@@ -641,83 +538,82 @@
       font-weight: 700;
       padding: 0 32px;
       min-height: 48px;
-      border-radius: 6px;
+      border-radius: 4px;
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       transition: background 0.2s var(--ease), transform 0.2s var(--ease);
     }
-    .btn-discover:hover {
+    .btn-register-discovery:hover {
       background: #E84D2B;
       transform: translateY(-2px);
     }
 
-    .secret-tip {
-      margin-top: 32px;
-      padding: 20px 24px;
-      background: var(--salmon-soft);
-      border: 1px solid rgba(255, 90, 54, 0.25);
-      border-radius: 6px;
-      font-size: 0.95rem;
-      color: var(--text);
+    .secret-advice {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
       display: none;
       animation: fadeIn 0.4s var(--ease) forwards;
     }
+    .secret-advice strong {
+      color: var(--amber);
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* SEÇÃO 6: AS COORDENADAS (Sem Rodeios) */
+    /* SEÇÃO 6: AS COORDENADAS */
     .section-coordinates {
-      padding: 100px clamp(20px, 5vw, 60px) 140px clamp(20px, 5vw, 60px);
+      padding: 120px clamp(20px, 6vw, 80px) 150px clamp(20px, 6vw, 80px);
       max-width: 1040px;
       margin: 0 auto;
     }
 
-    .coordinates-box {
+    .coord-card {
       border: 1px solid var(--border-strong);
-      background: var(--bg-card);
+      background: var(--bg-surface);
       border-radius: 8px;
-      padding: 48px;
+      padding: clamp(32px, 5vw, 56px);
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 48px;
       align-items: center;
     }
 
     .coord-title {
       font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
       font-weight: 400;
-      margin-bottom: 24px;
+      line-height: 1.2;
+      margin-bottom: 28px;
     }
 
-    .coord-list {
+    .coord-details {
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
 
-    .coord-item .label {
-      font-size: 0.75rem;
+    .coord-row .lbl {
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--text-faint);
       margin-bottom: 4px;
       font-weight: 600;
     }
-
-    .coord-item .value {
-      font-size: 1.1rem;
+    .coord-row .val {
+      font-size: 1.15rem;
       font-weight: 600;
       color: var(--text);
     }
 
-    .coord-actions {
+    .coord-buttons {
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -730,12 +626,12 @@
       font-weight: 700;
       padding: 0 24px;
       min-height: 52px;
-      border-radius: 6px;
+      border-radius: 4px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       transition: background 0.2s var(--ease), transform 0.2s var(--ease);
     }
     .btn-whatsapp-direct:hover {
@@ -743,7 +639,7 @@
       transform: translateY(-2px);
     }
 
-    .btn-map-route {
+    .btn-maps-link {
       background: transparent;
       color: var(--text-muted);
       border: 1px solid var(--border);
@@ -751,7 +647,7 @@
       font-weight: 600;
       padding: 0 24px;
       min-height: 48px;
-      border-radius: 6px;
+      border-radius: 4px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -759,15 +655,14 @@
       gap: 8px;
       transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
     }
-    .btn-map-route:hover {
+    .btn-maps-link:hover {
       color: var(--text);
       border-color: var(--text-muted);
     }
 
-    /* FOOTER */
     .footer {
       border-top: 1px solid var(--border);
-      padding: 40px clamp(20px, 5vw, 60px);
+      padding: 40px clamp(20px, 6vw, 80px);
       font-size: 0.82rem;
       color: var(--text-faint);
       display: flex;
@@ -778,12 +673,11 @@
     }
 
     @media (max-width: 860px) {
-      .confession-inner { grid-template-columns: 1fr; }
-      .paradox-grid { grid-template-columns: 1fr; }
-      .evidence-grid { grid-template-columns: 1fr; }
-      .coordinates-box { grid-template-columns: 1fr; padding: 32px 24px; }
-      .hero-document-frame { margin-top: 32px; }
-      .document-img { height: 320px; }
+      .evidence-hero-bar { grid-template-columns: 1fr; }
+      .evidence-specs { justify-content: flex-start; border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 16px; }
+      .confession-grid { grid-template-columns: 1fr; }
+      .witness-grid { grid-template-columns: 1fr; }
+      .coord-card { grid-template-columns: 1fr; gap: 36px; }
     }
   </style>
 </head>
@@ -791,237 +685,215 @@
 
   <a href="#main" class="skip-link">Pular para o conteúdo principal</a>
 
-  <header class="top-nav">
-    <div class="nav-left">
-      <a href="#" class="brand-name">Sushi LM</a>
-      <span class="location-stamp">Rudge Ramos · SBC</span>
-    </div>
-    <div class="nav-right">
-      <div class="secret-badge">4.8 ★ no Google Maps</div>
-      <a href="https://wa.me/5511940320412" target="_blank" rel="noopener" class="btn-quiet">
-        <span>Falar no WhatsApp</span>
+  <!-- Header Navigation -->
+  <header class="nav">
+    <a href="#" class="nav-brand">
+      <span class="brand-title">Sushi LM</span>
+      <span class="brand-coord">Rudge Ramos · SBC</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span class="nav-status">4.8 ★ no Google Maps</span>
+      <a href="https://wa.me/5511940320412" target="_blank" rel="noopener" class="btn-contact-quiet">
+        WhatsApp Direto
       </a>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- SEÇÃO 1: O ACHADO -->
-    <section class="section-hero">
-      <div class="hero-meta-line">
-        Endereço Restrito · <span>Rua Afonsina, 244</span> · R$ 80 a 100
+    <!-- SEÇÃO 1: O PROTOCOLO (O Paradoxo Silencioso) -->
+    <section class="section-protocol">
+      <div class="protocol-meta">
+        Nota 4,8 ★ · R$ 80–100 · <span>Rua Afonsina, 244</span>
       </div>
 
-      <h1 class="hero-heading">
-        O rodízio de 4,8 estrelas que quem conhece <em>não conta para ninguém</em>.
+      <h1 class="protocol-statement">
+        4,8 estrelas no Google Maps. R$ 80 a R$ 100 por pessoa. Apenas 330 avaliações. <em>A maioria passa pela porta e não sabe o que tem dentro.</em>
       </h1>
 
-      <p class="hero-lead">
-        Em São Bernardo do Campo existe um restaurante discreto onde o salmão é cortado farto na hora, o preço parece de outra década e as 330 pessoas que avaliaram concordam: a nota condiz com o prato.
+      <p class="protocol-lead">
+        Em São Bernardo do Campo existe um endereço onde o salmão fresco é farto, o valor não foi inflacionado pelo modismo e quem descobre simplesmente não conta para ninguém.
       </p>
+    </section>
 
-      <div class="hero-document-frame">
+    <!-- SEÇÃO 2: A EVIDÊNCIA FÍSICA (A Barca Real) -->
+    <section class="section-evidence-hero">
+      <div class="evidence-frame">
         <img src="imagens/imgi_38_630043211_18082800017258427_7863822594627027080_n.webp" 
-             alt="Barco monumental de salmão servido no salão do Sushi LM" 
-             class="document-img"
+             alt="Barco monumental de salmão servido no Sushi LM" 
+             class="evidence-hero-img"
              fetchpriority="high">
-        <div class="document-caption">
-          <span>Registro visual de mesa: Barco de sashimis e niguiris frescos</span>
-          <span class="caption-note">Foto real de cliente · Sem produção cenográfica</span>
+        
+        <div class="evidence-hero-bar">
+          <div>
+            <div class="evidence-quote">
+              "É o rodizio mais barato do Estado de São Paulo, TOP demais Eu super recomendo."
+            </div>
+            <div class="evidence-quote-source">
+              — Avaliação real registrada por cliente no Google Maps
+            </div>
+          </div>
+
+          <div class="evidence-specs">
+            <div class="spec-node">
+              <div class="val">100%</div>
+              <div class="lbl">Salmão Fresco</div>
+            </div>
+            <div class="spec-node">
+              <div class="val">Livre</div>
+              <div class="lbl">Sem Cota de Peixe</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SEÇÃO 2: A DESCONFIANÇA SUPERADA -->
+    <!-- SEÇÃO 3: A CONFISSÃO (Por que custa isso?) -->
     <section class="section-confession">
-      <div class="confession-inner">
-        <div class="room-photo-wrapper">
+      <div class="confession-grid">
+        <div class="salon-frame">
           <img src="imagens/imgi_35_627217937_885143564416399_5105713595733235477_n.jpg" 
-               alt="Salão modesto e acolhedor do Sushi LM na Rua Afonsina" 
-               class="room-photo" loading="lazy">
-          <div class="room-tag">Salão real · R. Afonsina, 244</div>
+               alt="Salão simples e acolhedor do Sushi LM na Rua Afonsina" 
+               class="salon-img" loading="lazy">
+          <div class="salon-tag">Foto real do salão · R. Afonsina, 244</div>
         </div>
 
-        <div class="confession-text">
-          <div class="quote-box">
-            <p class="quote-statement">
-              "Normalmente eu vou a restaurantes com boas avaliações aqui no Google, e posso dizer que a nota condiz com os pratos e atendimento."
-            </p>
-            <div class="quote-author">— Jéssica Pironato, Local Guide Google</div>
-          </div>
+        <div class="confession-narrative">
+          <h2 class="confession-title">A explicação que a concorrência não admite.</h2>
 
-          <div class="quote-box" style="border-left-color: var(--gold);">
-            <p class="quote-statement">
+          <div class="confession-quote-block">
+            <p class="confession-quote-text">
               "Confesso que o ambiente não é elaborado, mas a boa comida vale a pena."
             </p>
-            <div class="quote-author">— Anderson Ferreira, 1.074 fotos publicadas</div>
+            <div class="confession-author">— Anderson Ferreira, cliente Local Guide</div>
           </div>
 
-          <p class="confession-insight">
-            Nós não investimos em mármore, iluminação de arquiteto ou influenciadores pagos. 
-            <strong>Cada centavo do que você paga vai diretamente para o lombo de salmão fresco</strong> e para o shimeji quente que chega na sua mesa sem economia.
+          <div class="confession-quote-block" style="border-left-color: var(--salmon);">
+            <p class="confession-quote-text">
+              "Normalmente eu vou a restaurantes com boas avaliações, e posso dizer que a nota condiz com os pratos."
+            </p>
+            <div class="confession-author">— Jéssica Pironato, cliente verificada</div>
+          </div>
+
+          <p class="confession-body">
+            Não cobramos por mármore italiano, hostess na calçada ou decoração cenográfica. 
+            <strong>Cada centavo do rodízio é colocado na compra de peixe fresco diariamente</strong> e no preparo de quem cuida da cozinha como quem cuida de casa.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- SEÇÃO 3: O PARADOXO DE SÃO PAULO -->
-    <section class="section-paradox">
-      <div class="paradox-header">
-        <div class="section-label">A Matemática Impossível</div>
-        <h2 class="paradox-title">Por que a concorrência não consegue explicar o Sushi LM?</h2>
-      </div>
-
-      <div class="paradox-grid">
-        <div class="paradox-card capital">
-          <div>
-            <div class="card-kicker">O Rodízio Padrão de São Paulo</div>
-            <div class="card-price">R$ 180–260</div>
-            <ul class="card-items">
-              <li>Duas horas de fila na calçada</li>
-              <li>Sashimi com cota estrita de repetição</li>
-              <li>Você paga a reforma do salão e o valet</li>
-              <li>Ambiente instagramável, peixe racionado</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="paradox-card lm">
-          <div>
-            <div class="card-kicker">A Realidade em Rudge Ramos</div>
-            <div class="card-price" style="color: var(--salmon);">R$ 80–100</div>
-            <ul class="card-items">
-              <li>Salmão fresco farto sem restrição de repetição</li>
-              <li>Shimeji fervendo na chapa de manteiga</li>
-              <li>Temaki transbordando e sobremesa inclusa</li>
-              <li>Atendimento atencioso de quem é dono do próprio negócio</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="reviewer-verdict">
-        "É o rodizio mais barato do Estado de São Paulo, TOP demais Eu super recomendo."
-        <div style="font-size: 0.85rem; color: var(--text-faint); margin-top: 6px; font-style: normal;">— Avaliação real verificada no Google Maps</div>
-      </div>
-    </section>
-
-    <!-- SEÇÃO 4: O ARQUIVO DE EVIDÊNCIAS -->
-    <section class="section-evidence">
-      <div class="evidence-header">
-        <div>
-          <div class="section-label">Registro Documental</div>
-          <h2 class="evidence-title">A comida que dispensa filtro</h2>
-        </div>
-        <p class="evidence-sub">
-          Três testemunhas visuais do que é servido diariamente na Rua Afonsina. Sem cenografia, exatamente como chega na sua mesa.
+    <!-- SEÇÃO 4: AS TRÊS TESTEMUNHAS (O que chega à mesa) -->
+    <section class="section-witness">
+      <div class="witness-header">
+        <h2 class="witness-title">Três certezas na mesa</h2>
+        <p class="witness-sub">
+          Registros sem edição do que você recebe ao sentar no Sushi LM.
         </p>
       </div>
 
-      <div class="evidence-grid">
-        <article class="evidence-item">
-          <div class="evidence-img-box">
+      <div class="witness-grid">
+        <article class="witness-card">
+          <div class="witness-img-wrap">
             <img src="imagens/imgi_56_620913433_18081339719258427_7178080884564385026_n.webp" 
-                 alt="Temaki com salmão em cubos até a borda" 
-                 class="evidence-img" loading="lazy">
+                 alt="Temaki de salmão transbordando recheio" 
+                 class="witness-img" loading="lazy">
           </div>
-          <div class="evidence-info">
-            <span class="evidence-tag">Sem Miséria</span>
-            <h3 class="evidence-name">O Temaki Aberto</h3>
-            <p class="evidence-desc">Alga crocante com cubos generosos de salmão até o topo, cebolinha e cream cheese na proporção certa.</p>
+          <div class="witness-content">
+            <div class="witness-label">Sem economia</div>
+            <h3 class="witness-name">O Temaki Aberto</h3>
+            <p class="witness-desc">Cubos grossos de salmão fresco até a borda da alga crocante, sem excesso de arroz para tapear.</p>
           </div>
         </article>
 
-        <article class="evidence-item">
-          <div class="evidence-img-box">
+        <article class="witness-card">
+          <div class="witness-img-wrap">
             <img src="imagens/imgi_40_627267597_18082742084258427_8721984227119165049_n.webp" 
-                 alt="Salmão maçaricado com cobertura de tarê" 
-                 class="evidence-img" loading="lazy">
+                 alt="Salmão maçaricado na chama viva com tarê" 
+                 class="witness-img" loading="lazy">
           </div>
-          <div class="evidence-info">
-            <span class="evidence-tag">Feito na Hora</span>
-            <h3 class="evidence-name">O Salmão Maçaricado</h3>
-            <p class="evidence-desc">Selado na chama viva com molho tarê caramelizado e gergelim tostado. Quente, macio e farto.</p>
+          <div class="witness-content">
+            <div class="witness-label">Feito na hora</div>
+            <h3 class="witness-name">A Chapa & o Maçarico</h3>
+            <p class="witness-desc">Salmão selado com molho tarê borbulhante e o shimeji quente na manteiga servido à vontade.</p>
           </div>
         </article>
 
-        <article class="evidence-item">
-          <div class="evidence-img-box">
+        <article class="witness-card">
+          <div class="witness-img-wrap">
             <img src="imagens/imgi_57_619256448_18081339683258427_3206479920123967315_n.webp" 
-                 alt="Sushis doces inclusos no rodízio" 
-                 class="evidence-img" loading="lazy">
+                 alt="Sobremesas artesanais de doce de leite e morango" 
+                 class="witness-img" loading="lazy">
           </div>
-          <div class="evidence-info">
-            <span class="evidence-tag">Incluso no Valor</span>
-            <h3 class="evidence-name">Os Sushis Doces</h3>
-            <p class="evidence-desc">Hot roll crocante com doce de leite e morangos frescos com geleia artesanal para encerrar a mesa.</p>
+          <div class="witness-content">
+            <div class="witness-label">Incluso no rodízio</div>
+            <h3 class="witness-name">O Fechamento</h3>
+            <p class="witness-desc">Hot rolls crocantes de doce de leite com raspas de limão e morangos recheados com calda.</p>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- SEÇÃO 5: O CÍRCULO DOS 330 -->
+    <!-- SEÇÃO 5: O CÍRCULO DOS 330 (Iniciação) -->
     <section class="section-circle">
-      <div class="circle-card">
-        <div class="circle-counter-wrap">
-          <div class="circle-counter" id="circle-count">330</div>
-          <div class="circle-label">fregueses registrados</div>
-        </div>
-
-        <h2 class="circle-title">Você está prestes a ser a 331ª pessoa a saber.</h2>
+      <div class="circle-wrap">
+        <div class="circle-stat" id="counter-val">330</div>
+        <h2 class="circle-title">Você é a 331ª pessoa a saber que este lugar existe.</h2>
         <p class="circle-desc">
-          Quem descobre o Sushi LM guarda o endereço. Clique abaixo para registrar que você encontrou o restaurante e liberar a recomendação de quem já frequenta.
+          Trezentas e trinta pessoas registraram no Google Maps que viraram freguesas na Rua Afonsina. 
+          Toque abaixo para confirmar que descobriu o restaurante e ver a recomendação de quem já frequenta.
         </p>
 
-        <button class="btn-discover" id="btn-discover">
-          <span>Registrar Descoberta (Entrar no Círculo)</span>
-        </button>
-
-        <div class="secret-tip" id="secret-tip">
-          <strong>Recomendação de quem sabe:</strong> As quintas-feiras à noite e os almoços de fim de semana são os períodos mais disputados. 
-          Chegue às 18:45 para pegar mesa sem espera ou peça pelo WhatsApp para entrega rápida no Rudge Ramos.
+        <div class="circle-action-box">
+          <button class="btn-register-discovery" id="btn-initiate">
+            <span>Confirmar Descoberta (Entrar no Círculo)</span>
+          </button>
+          <div class="secret-advice" id="secret-advice">
+            <strong>Dica de quem sabe:</strong> O salão é pequeno e costuma lotar nas quintas à noite e nos fins de semana. 
+            Chegue logo na abertura (18:30) para pegar mesa sem espera, ou peça pelo WhatsApp para entrega rápida no Rudge Ramos.
+          </div>
         </div>
       </div>
     </section>
 
     <!-- SEÇÃO 6: AS COORDENADAS -->
     <section class="section-coordinates">
-      <div class="coordinates-box">
+      <div class="coord-card">
         <div>
-          <h2 class="coord-title">As Coordenadas do Restaurante</h2>
-          
-          <div class="coord-list">
-            <div class="coord-item">
-              <div class="label">Endereço</div>
-              <div class="value">Rua Afonsina, 244 — Rudge Ramos</div>
-              <div style="font-size: 0.85rem; color: var(--text-faint);">São Bernardo do Campo — SP, 09633-000</div>
+          <h2 class="coord-title">As Coordenadas</h2>
+
+          <div class="coord-details">
+            <div class="coord-row">
+              <div class="lbl">Endereço</div>
+              <div class="val">Rua Afonsina, 244 — Rudge Ramos</div>
+              <div style="font-size: 0.85rem; color: var(--text-faint); margin-top: 2px;">São Bernardo do Campo — SP, 09633-000</div>
             </div>
 
-            <div class="coord-item">
-              <div class="label">Horário de Funcionamento</div>
-              <div class="value">Almoço até 15:30 · Jantar a partir de 18:30</div>
+            <div class="coord-row">
+              <div class="lbl">Horário</div>
+              <div class="val">Almoço até 15:30 · Jantar a partir de 18:30</div>
             </div>
 
-            <div class="coord-item">
-              <div class="label">Valor Médio Informado</div>
-              <div class="value" style="color: var(--salmon);">R$ 80 a 100 por pessoa</div>
+            <div class="coord-row">
+              <div class="lbl">Preço do Rodízio</div>
+              <div class="val" style="color: var(--salmon);">R$ 80 a 100 por pessoa</div>
             </div>
           </div>
         </div>
 
-        <div class="coord-actions">
+        <div class="coord-buttons">
           <a href="https://wa.me/5511940320412?text=Ol%C3%A1%2C%20descobri%20o%20Sushi%20LM%20e%20gostaria%20de%20saber%20sobre%20o%20rod%C3%ADzio" 
              target="_blank" rel="noopener" class="btn-whatsapp-direct">
             <span>Conversar no WhatsApp</span>
           </a>
 
           <a href="https://maps.google.com/?q=R.+Afonsina,+244+-+Rudge+Ramos,+S%C3%A3o+Bernardo+do+Campo+-+SP" 
-             target="_blank" rel="noopener" class="btn-map-route">
-            <span>Abrir Rota no Google Maps ↗</span>
+             target="_blank" rel="noopener" class="btn-maps-link">
+            <span>Traçar Rota no Google Maps ↗</span>
           </a>
 
-          <div style="font-size: 0.78rem; color: var(--text-faint); text-align: center; margin-top: 8px;">
-            Aceita refeição no local, retirada no balcão e entrega no ABC.
+          <div style="font-size: 0.78rem; color: var(--text-faint); text-align: center; margin-top: 6px;">
+            Atendimento presencial, retirada no balcão e entrega sem contato.
           </div>
         </div>
       </div>
@@ -1029,25 +901,26 @@
 
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div>
       <strong>Sushi LM</strong> · Rua Afonsina, 244, Rudge Ramos, São Bernardo do Campo — SP
     </div>
     <div>
-      Telefone direto: (11) 94032-0412
+      Telefone: (11) 94032-0412
     </div>
   </footer>
 
   <script>
-    const btnDiscover = document.getElementById('btn-discover');
-    const circleCount = document.getElementById('circle-count');
-    const secretTip = document.getElementById('secret-tip');
+    const btnInitiate = document.getElementById('btn-initiate');
+    const counterVal = document.getElementById('counter-val');
+    const secretAdvice = document.getElementById('secret-advice');
 
-    btnDiscover.addEventListener('click', () => {
-      circleCount.textContent = '331';
-      circleCount.style.color = 'var(--salmon)';
-      btnDiscover.style.display = 'none';
-      secretTip.style.display = 'block';
+    btnInitiate.addEventListener('click', () => {
+      counterVal.textContent = '331';
+      counterVal.style.color = 'var(--salmon)';
+      btnInitiate.style.display = 'none';
+      secretAdvice.style.display = 'block';
     });
   </script>
 </body>
