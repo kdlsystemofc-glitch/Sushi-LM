@@ -37,7 +37,7 @@ Gatilho das entradas: topo do grupo a 65% da viewport (35% visível), com `clamp
 | 14 | global | links (CSS, já existia) | hover | cor/borda | todas |
 
 ## Parado de propósito (regra: superfície cara ou texto por cima)
-Painéis do noren, cortinas, kanji mascarado, trama de linho, shibori, fundo das faixas; foto da Mesa e foto do salão (texto em cima).
+Painéis do noren (fora a abertura única do hero), cortinas, kanji mascarado, trama de linho, shibori, fundo das faixas; foto da Mesa e foto do salão (texto em cima).
 
 ## Rejeitado pelo critério visual
 | Efeito | Por quê |
