@@ -212,3 +212,49 @@
   .s-avaliacoes { min-height: clamp(24rem, 36vw, 34rem); }
   .s-avaliacoes__tecido { min-height: 0; }
 }
+
+/* ═══ 06 · CARDÁPIO — faixas alternadas índigo/linho, foto se funde na cor ═══ */
+.prato {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "nome foto";
+  align-items: center;
+  min-height: clamp(9rem, 18vw, 17rem);
+}
+.prato--foto-esquerda { grid-template-areas: "foto nome"; }
+.prato--indigo { background-color: var(--indigo-900); background-image: var(--trama); color: var(--papel); }
+.prato--linho  { background-color: var(--linho); background-image: var(--trama); color: var(--tinta); }
+.prato__nome {
+  grid-area: nome;
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  font-size: var(--fs-md);
+  font-size: clamp(1.05rem, .8rem + 1.1vw, 1.9rem);
+  letter-spacing: .22em;
+  text-indent: .22em; /* equilibra o espaço após a última letra */
+}
+.prato__foto { grid-area: foto; align-self: stretch; position: relative; }
+.prato__foto img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 40%);
+          mask-image: linear-gradient(to right, transparent, #000 40%);
+}
+.prato--foto-esquerda .prato__foto img {
+  -webkit-mask-image: linear-gradient(to left, transparent, #000 40%);
+          mask-image: linear-gradient(to left, transparent, #000 40%);
+}
+.prato__foto img[src*="nigiri"] { object-position: 50% 42%; }
+.prato__foto img[src*="temaki"] { object-position: 50% 40%; }
+.prato__foto img[src*="sobremesa"] { object-position: 50% 45%; }
+.prato--sem-foto { grid-template-columns: 1fr; grid-template-areas: "nome" "nota"; align-content: center; justify-items: center; }
+.prato--sem-foto .prato__nome { padding-bottom: 0; }
+.prato__nota {
+  grid-area: nota;
+  padding: var(--space-3) var(--gutter) var(--space-4);
+  text-align: center;
+  font-size: var(--fs-xs);
+  letter-spacing: .08em;
+  color: var(--papel-suave);
+}
