@@ -99,17 +99,18 @@
 /* ═══ 02 · RODÍZIO — prato real sobre linho ═══ */
 .s-rodizio { color: var(--tinta); padding-block: var(--space-6) var(--space-6); }
 .s-rodizio__corpo { display: grid; justify-items: center; gap: var(--space-5); max-width: 76rem; }
-.s-rodizio__foto { width: 100%; max-width: 60rem; }
+.s-rodizio__foto { position: relative; width: 100%; max-width: 60rem; aspect-ratio: 3 / 2; overflow: hidden; }
 .s-rodizio__foto img {
-  width: 100%;
-  aspect-ratio: 3 / 2;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
   object-fit: cover;
 }
 .s-rodizio__legenda { text-align: center; }
 .s-rodizio__titulo { font-size: var(--fs-lg); font-size: min(var(--fs-lg), 8vw); margin-right: calc(-1 * var(--track-versal)); }
 .s-rodizio__nota { margin-top: var(--space-3); color: var(--tinta-suave); font-size: var(--fs-sm); }
 @media (min-width: 48rem) {
-  .s-rodizio__foto img { aspect-ratio: 16 / 9; object-position: 50% 45%; }
+  .s-rodizio__foto { aspect-ratio: 16 / 9; }
+  .s-rodizio__foto img { object-position: 50% 45%; }
 }
 
 /* ═══ 03 · COZINHA — citação real sobre índigo + foto ═══ */
