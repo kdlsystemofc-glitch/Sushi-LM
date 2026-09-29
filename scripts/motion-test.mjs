@@ -115,7 +115,12 @@ async function secao(id) {
     let t0 = 0;
     for (const [t, nome] of quadros) {
       await mot.page.waitForTimeout(t - t0); t0 = t;
-      if (nome === 'fim') await mot.page.evaluate(() => window.__motion.repousar());
+      if (nome === 'fim') {
+        // seções com vários grupos: rola até todos entrarem e volta (entradas são once)
+        for (let y = alvoY; y <= alvoY + vp[1]; y += 150) { await irPara(mot.page, y); await mot.page.waitForTimeout(40); }
+        await irPara(mot.page, alvoY); await mot.page.waitForTimeout(1500);
+        await mot.page.evaluate(() => window.__motion.repousar());
+      }
       await mot.page.screenshot({ path: `${out}/${w}-quadro-${nome}.png`, clip: c });
     }
     const final = PNG.sync.read(await mot.page.screenshot({ clip: c }));

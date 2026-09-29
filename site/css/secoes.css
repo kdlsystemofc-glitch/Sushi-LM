@@ -245,7 +245,7 @@
   letter-spacing: .22em;
   text-indent: .22em; /* equilibra o espaço após a última letra */
 }
-.prato__foto { grid-area: foto; align-self: stretch; position: relative; }
+.prato__foto { grid-area: foto; align-self: stretch; position: relative; overflow: hidden; }
 .prato__foto img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;

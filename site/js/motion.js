@@ -186,8 +186,11 @@
     cfg: cfg, estado: estado, pronto: true,
     pausar: pausar, retomar: retomar,
     alternar: function () { estado.pausado ? retomar() : pausar(); return estado.pausado; },
-    // testes: loops em repouso (rotação 0), sem apagar o estado de pausa
-    repousar: function () { estado.loops.forEach(function (l) { l.tl.pause(); gsap.set(l.el, l.repouso); }); },
+    // testes: loops e parallax em repouso até a próxima rolagem
+    repousar: function () {
+      estado.loops.forEach(function (l) { l.tl.pause(); gsap.set(l.el, l.repouso); });
+      estado.parallax.forEach(function (p) { if (p.tween) gsap.set(p.img, { y: 0 }); });   // parallax em repouso (recorte = estático)
+    },
     irPara: function (y) { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); ScrollTrigger.update(); }
   };
   document.dispatchEvent(new CustomEvent('motion:pronto'));
