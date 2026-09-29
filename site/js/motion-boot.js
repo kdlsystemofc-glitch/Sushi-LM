@@ -45,13 +45,26 @@
       document.head.appendChild(s);
     })(0);
   }
-  // Depois do load, espera a 1ª pintura do hero (a textura do noren é cara de pintar) e um
-  // momento ocioso: o motion nunca atrasa o LCP. Interação do usuário antecipa.
+  // Depois do load, espera o LCP de fato pintado (a textura do noren é rasterizada fora da
+  // thread principal e termina depois do load) e um momento ocioso: o motion nunca atrasa
+  // o LCP. Sem suporte a LCP: 2 quadros + ocioso. Teto de 4s. Interação antecipa.
+  var lcpVisto = false, esperandoLcp = null;
+  try {
+    new PerformanceObserver(function () {
+      lcpVisto = true;
+      if (esperandoLcp) { var f = esperandoLcp; esperandoLcp = null; f(); }
+    }).observe({ type: 'largest-contentful-paint', buffered: true });
+  } catch (e) { lcpVisto = true; }
+  function ocioso() {
+    if (window.requestIdleCallback) requestIdleCallback(iniciar, { timeout: 2500 });
+    else setTimeout(iniciar, 300);
+  }
   function aposPintura() {
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        if (window.requestIdleCallback) requestIdleCallback(iniciar, { timeout: 2500 });
-        else setTimeout(iniciar, 300);
+        if (lcpVisto) return ocioso();
+        esperandoLcp = ocioso;
+        setTimeout(function () { if (esperandoLcp) { esperandoLcp = null; ocioso(); } }, 4000);
       });
     });
   }
