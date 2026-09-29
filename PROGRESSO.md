@@ -53,3 +53,9 @@
 - Vídeo: screenshots/motion/video/*.webm (gitignored).
 - Lighthouse final: mediana 78 (= base), LCP 4,43s, TBT 0, CLS 0.
 - Push: não feito (GH_TOKEN ausente, sem remote).
+
+## Hero — abertura do noren (pedido do cliente) ✅
+- CSS puro na 1ª pintura: noren fechado → abre ~55% com a barra arrastando → volta balançando; foto com avanço de câmera; vinheta alivia; 鮨 carimba; nome/local/CTA sobem. 2,5s. Exceção registrada no DESIGN.md.
+- Bug corrigido: o GSAP lia a escala da animação CSS e congelava a foto em scale(1.14); parallax agora monta depois das animações da foto.
+- Quadros-chave: `node scripts/hero-quadros.mjs` → screenshots/motion/hero-abertura/.
+- Testes: global verde, hero 0,015%/0,052%, auditoria 17/17, estático idêntico. Lighthouse 77 (base 78), LCP 4,43s, SI 3,56s.

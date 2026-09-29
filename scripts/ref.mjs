@@ -16,7 +16,7 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   const p = await b.newPage({ viewport: { width: w, height: h } });
   await p.goto(URL, { waitUntil: 'networkidle' });
   await p.evaluate(async () => { await document.fonts.ready; document.querySelectorAll('img[loading="lazy"]').forEach(i => i.loading = 'eager'); await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
-  const buf = await p.screenshot({ fullPage: true });
+  const buf = await p.screenshot({ fullPage: true, animations: 'disabled' });  // abertura do hero: compara o estado final
   const f = resolve(dir, `aprovado-${w}.png`);
   if (modo === 'capturar' || !existsSync(f)) { writeFileSync(f, buf); console.log('capturado', w); }
   else {

@@ -118,7 +118,16 @@
     p.montar();
     estado.parallax.push(p);
   }
-  function esperarImg(img, fn) { if (img.complete && img.naturalWidth) fn(); else img.addEventListener('load', fn, { once: true }); }
+  // Espera a imagem carregar E as animações CSS dela terminarem (abertura do hero): senão o GSAP
+  // lê a escala do meio da animação como transform "base" e a congela no estilo inline.
+  function esperarImg(img, fn) {
+    var css = function () {
+      var an = img.getAnimations ? img.getAnimations() : [];
+      if (!an.length) return fn();
+      Promise.all(an.map(function (a) { return a.finished.catch(function () {}); })).then(fn);
+    };
+    if (img.complete && img.naturalWidth) css(); else img.addEventListener('load', css, { once: true });
+  }
   if (full && high) {
     document.querySelectorAll('[data-parallax]').forEach(function (img) {
       if (img.loading === 'lazy' && !img.complete) img.loading = 'eager';

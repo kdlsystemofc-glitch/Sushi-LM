@@ -286,3 +286,5 @@ Mantenha tudo idêntico na área original da foto: mesmo prato, mesma mesa, mesm
 - **Tramas por seção, e não em overlay fixo global**: um `body::after` fixo com ruído (como no index antigo) seria elemento contínuo e caro. Por seção fica mais barato e não interfere no motion.
 - **Sem sombras**: profundidade só por gradiente de cor dentro do próprio índigo, como no tecido do mockup.
 - **Largura máxima do texto**: `max-width: 34ch` nas citações, `60ch` no corpo.
+
+- **Exceção — abertura do noren no hero (pedido do cliente, 2026-09-29).** A regra "decorativo caro não se move" é mantida em todo o site, exceto aqui: os painéis do noren se movem uma única vez, na carga, só com `transform` (sem filter/opacity nos painéis), em ~2,5s, terminando no layout estático. É CSS puro (não depende de JS; `prefers-reduced-motion` mostra o hero já aberto). Custo medido: Lighthouse 77 (base 78), LCP inalterado.

@@ -67,8 +67,9 @@ async function rodar(label, [w, h], opts = {}) {
     document.querySelectorAll('img[loading="lazy"]').forEach(i => i.loading = 'eager');
     await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
   });
+  await page.evaluate(() => Promise.all(document.getAnimations().map(a => a.finished.catch(() => 0))));  // espera a abertura do hero
   const r = await page.evaluate(inspect, w);
-  if (SHOTS) await page.screenshot({ path: `${out}/${label}.png`, fullPage: true });
+  if (SHOTS) await page.screenshot({ path: `${out}/${label}.png`, fullPage: true, animations: 'disabled' });
   const problemas = [r.overflowX > 0 && `rolagem-x ${r.overflowX}px`, r.cortado.length && `cortado: ${r.cortado.join(' | ')}`, r.sobreposto.length && `sobreposto: ${r.sobreposto.join(' | ')}`, r.toque.length && `toque<44: ${r.toque.join(' | ')}`, r.foraDaTela.length && `fora: ${r.foraDaTela.join(' | ')}`, erros.length && `console: ${erros.join(' | ')}`].filter(Boolean);
   console.log(`${problemas.length ? '✗' : '✓'} ${label}${problemas.length ? '\n    ' + problemas.join('\n    ') : ''}`);
   await ctx.close();

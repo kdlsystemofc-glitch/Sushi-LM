@@ -31,6 +31,8 @@ async function abrir(query, [w, h] = [1440, 900], opts = {}) {
     await Promise.all([...document.images].filter(i => i.loading !== 'lazy').map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
   });
   if (!/motion=off/.test(query)) await page.waitForFunction(() => window.__motion && window.__motion.pronto, null, { timeout: 8000 });
+  // a regra dos decorativos caros vale depois da abertura do noren (exceção pedida pelo cliente, CSS, uma vez)
+  await page.evaluate(() => Promise.all(document.getAnimations().map(a => a.finished.catch(() => 0))));
   await page.waitForTimeout(300);
   return { ctx, page, erros };
 }

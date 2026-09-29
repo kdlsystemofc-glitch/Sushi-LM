@@ -20,7 +20,8 @@ Gatilho das entradas: topo do grupo a 65% da viewport (35% visível), com `clamp
 
 | # | Seção | Elemento | Tipo | Detalhe | Qualidade |
 |---|---|---|---|---|---|
-| 1 | 01 Hero | `.s-hero__foto` | parallax | 0 no topo → +24px no fim do hero; recorte compensado | high |
+| 0 | 01 Hero | **abertura do noren** (CSS, 1ª pintura) | entrada única, 2,5s | fechado no centro → abre ~55% com a barra arrastando → volta balançando até o repouso; foto surge com avanço de câmera (scale 1,14→1); vinheta alivia enquanto aberto; 鮨 carimba (1,75s); nome, local e CTA sobem (1,85–2,15s) | todas, menos reduced |
+| 1 | 01 Hero | `.s-hero__foto` | parallax | 0 no topo → +24px no fim do hero; montado só depois da abertura | high |
 | 2 | 02 Rodízio | foto | entrada fade + parallax | ±24px, 0 com a caixa centrada | fade: todas · parallax: high |
 | 3 | 02 Rodízio | título, nota | entrada | sobe 24px | todas |
 | 4 | 03 Cozinha | citação, autoria | entrada | sobe 24px | todas |
@@ -41,8 +42,8 @@ Painéis do noren, cortinas, kanji mascarado, trama de linho, shibori, fundo das
 ## Rejeitado pelo critério visual
 | Efeito | Por quê |
 |---|---|
-| Balanço do noren / abertura das cortinas (DESIGN.md §f) | superfícies caras: regra do projeto |
-| Entrada do hero | exigiria esconder conteúdo acima da dobra até o JS |
+| Balanço contínuo do noren / abertura das cortinas do Convite | superfícies caras: regra do projeto. A abertura do hero é uma **exceção pedida pelo cliente** (uma vez, só transform) |
+| Entrada do hero via JS | exigiria esconder conteúdo acima da dobra até o JS; por isso a abertura é CSS puro |
 | Contagem 0,0 → 4,8 | recurso de painel genérico; reescreve o texto durante a animação |
 | Estrela ou seta do CTA pulsando | chamariz de template, sem correspondente na cena |
 | Vapor, brilho, partículas sobre a comida | inventaria algo que as fotos reais não têm |

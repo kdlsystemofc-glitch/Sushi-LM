@@ -32,7 +32,7 @@ for (const w of widths) {
   });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   if (overflow > 0) console.warn(`AVISO ${w}px: rolagem horizontal de ${overflow}px`);
-  await page.screenshot({ path: `${out}/${w}-pagina.png`, fullPage: true });
+  await page.screenshot({ path: `${out}/${w}-pagina.png`, fullPage: true, animations: 'disabled' });
   if (!final) {
     const el = page.locator(`#${id}`);
     await el.screenshot({ path: `${out}/${w}-secao.png` });

@@ -22,11 +22,12 @@
 }
 
 .noren {
+  --noren-vao: clamp(.5rem, 4vw, 5rem);
   position: absolute; top: 0; inset-inline: 0;
   height: 88%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(.5rem, 4vw, 5rem);
+  gap: var(--noren-vao);
   padding-inline: clamp(.75rem, -2rem + 14vw, 10rem);
 }
 .noren__painel {
@@ -94,6 +95,63 @@
   .noren__local { letter-spacing: .08em; }
   .noren__local span { display: inline; white-space: nowrap; }
   .noren__local span + span::before { content: " · "; }
+}
+
+/* ── Abertura do noren (só CSS: roda na 1ª pintura, não depende de JS) ──
+   Exceção pedida pelo cliente à regra "decorativo caro não se move": acontece UMA vez,
+   só transform nos painéis (sem filter/opacity), ~2,5s, e termina exatamente no layout
+   estático. fill-mode backwards: depois do fim nada fica preso, e o parallax (GSAP) da
+   foto volta a valer. Movimento reduzido: o reset do base.css zera a duração → hero já aberto. */
+@media (prefers-reduced-motion: no-preference) {
+  .noren__painel { transform-origin: 50% 0; animation: 2.5s backwards; }
+  .noren__painel--esq { animation-name: noren-abre-esq; }
+  .noren__painel--dir { animation-name: noren-abre-dir; }
+  .s-hero__foto { animation: hero-entra 2.4s cubic-bezier(.2, .6, .2, 1) .2s backwards; }
+  .s-hero::before { animation: hero-luz 2.5s ease-in-out backwards; }
+  .noren__kanji { animation: kanji-carimbo .6s cubic-bezier(.3, 1.4, .5, 1) 1.75s backwards; }
+  .noren__marca > * { animation: marca-surge .8s cubic-bezier(.16, 1, .3, 1) backwards; }
+  .noren__nome  { animation-delay: 1.85s; }
+  .noren__local { animation-delay: 2s; }
+  .noren__cta   { animation-delay: 2.15s; }
+}
+/* fechado (encostados no centro) → abre com força, a barra arrastando atrás →
+   a barra passa do ponto → volta balançando até o repouso (= layout estático) */
+@keyframes noren-abre-esq {
+  0%, 9% { transform: translateX(calc(var(--noren-vao) / 2)); animation-timing-function: cubic-bezier(.55, 0, .2, 1); }
+  36%    { transform: translateX(-54%) rotate(-3.5deg); animation-timing-function: cubic-bezier(.3, 0, .4, 1); }
+  50%    { transform: translateX(-56%) rotate(2.4deg); animation-timing-function: cubic-bezier(.45, 0, .35, 1); }
+  74%    { transform: translateX(3%) rotate(-1.2deg); animation-timing-function: ease-in-out; }
+  89%    { transform: translateX(-1%) rotate(.5deg); animation-timing-function: ease-in-out; }
+  100%   { transform: none; }
+}
+@keyframes noren-abre-dir {
+  0%, 9% { transform: translateX(calc(var(--noren-vao) / -2)); animation-timing-function: cubic-bezier(.55, 0, .2, 1); }
+  36%    { transform: translateX(54%) rotate(3.5deg); animation-timing-function: cubic-bezier(.3, 0, .4, 1); }
+  50%    { transform: translateX(56%) rotate(-2.4deg); animation-timing-function: cubic-bezier(.45, 0, .35, 1); }
+  74%    { transform: translateX(-3%) rotate(1.2deg); animation-timing-function: ease-in-out; }
+  89%    { transform: translateX(1%) rotate(-.5deg); animation-timing-function: ease-in-out; }
+  100%   { transform: none; }
+}
+/* a foto surge atrás do noren com um avanço de câmera (você entra) */
+@keyframes hero-entra {
+  from { opacity: 0; transform: scale(1.14); }
+  30%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
+}
+/* a luz do salão entra pela porta aberta: a vinheta alivia e volta quando o noren assenta */
+@keyframes hero-luz {
+  0%, 12% { opacity: 1; }
+  40%, 58% { opacity: .35; }
+  100% { opacity: 1; }
+}
+/* 鮨 carimbado no tecido */
+@keyframes kanji-carimbo {
+  from { opacity: 0; transform: scale(1.25); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes marca-surge {
+  from { opacity: 0; transform: translateY(.9rem); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* ═══ 02 · RODÍZIO — prato real sobre linho ═══ */
