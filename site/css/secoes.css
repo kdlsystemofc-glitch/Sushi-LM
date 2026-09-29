@@ -103,3 +103,32 @@
 @media (min-width: 48rem) {
   .s-rodizio__foto img { aspect-ratio: 16 / 9; object-position: 50% 45%; }
 }
+
+/* ═══ 03 · COZINHA — citação real sobre índigo + foto ═══ */
+.s-cozinha { background: var(--indigo-900); }
+.s-cozinha__texto {
+  display: grid; place-items: center;
+  padding: var(--space-7) var(--gutter);
+  text-align: center;
+}
+.s-cozinha__frase {
+  font-size: var(--fs-lg);
+  max-width: 12em;
+  margin-inline: auto;
+  color: var(--papel);
+  text-wrap: balance;
+  overflow-wrap: normal;
+}
+.s-cozinha__autor {
+  margin-top: var(--space-3);
+  font-size: var(--fs-xs);
+  letter-spacing: .08em;
+  color: var(--papel-suave);
+}
+.s-cozinha__foto img { width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+@media (min-width: 48rem) {
+  .s-cozinha { min-height: clamp(22rem, 36vw, 34rem); }
+  .s-cozinha__foto { position: relative; }
+  .s-cozinha__foto img { position: absolute; inset: 0; aspect-ratio: auto; object-position: 50% 40%; }
+  .s-cozinha__frase { font-size: var(--fs-xl); font-size: clamp(2rem, 1rem + 2.2vw, 3.25rem); }
+}
