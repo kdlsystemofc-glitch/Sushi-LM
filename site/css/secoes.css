@@ -335,3 +335,28 @@
   border-bottom: 1px solid var(--fio);
 }
 .s-convite__mapa:hover { color: var(--salmao-claro); border-color: currentColor; }
+
+/* ═══ 08 · RODAPÉ — CTA + dados reais ═══ */
+.s-rodape { background-color: var(--indigo-950); padding-block: var(--space-6) var(--space-5); }
+.s-rodape__corpo { display: grid; justify-items: center; gap: var(--space-5); text-align: center; }
+.s-rodape__cta {
+  display: inline-flex; align-items: center; gap: .4em;
+  min-height: 2.75rem;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--fs-lg);
+  color: var(--papel);
+  text-decoration: none;
+  border-bottom: 1px solid var(--fio);
+  padding-inline: var(--space-2);
+}
+.s-rodape__cta:hover { color: var(--salmao-claro); border-color: currentColor; }
+.s-rodape__dados {
+  display: grid; justify-items: center; gap: var(--space-2);
+  font-style: normal;
+  color: var(--papel-suave);
+}
+.s-rodape__dados .rotulo { max-width: 40ch; line-height: 1.8; }
+.s-rodape__dados a { color: var(--papel); text-decoration-color: var(--fio); text-underline-offset: .25em; display: inline-block; min-height: 2.75rem; line-height: 2.75rem; }
+.s-rodape__logo { width: clamp(3.5rem, 3rem + 1.5vw, 4.5rem); border-radius: 50%; }
+@media (min-width: 48rem) { .s-rodape__dados .rotulo { max-width: none; } }
