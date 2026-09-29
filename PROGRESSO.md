@@ -19,3 +19,9 @@
 - Logo real diz "Sushi L&M Delivery" em 150px — confirmar nome/arquivo com o cliente.
 - Pendências do cliente: DESIGN.md §i (preço, horário, WhatsApp/reserva, autorizações).
 - Próximo: fase de motion (DESIGN.md §f).
+
+## Etapa 3 — Passada responsiva (2026-09-29) ✅
+- `scripts/audit.mjs`: 12 telas (2560→320 + 844x390), zoom de texto 200%, sem fontes, reduced-motion+dark. Todas passam.
+- Corrigido: color-mix → rgb(var(--*-rgb)/a) (Safari < 16.2); fallbacks 100vh/overflow hidden; color-scheme: only light;
+  texto a 200% vazava (grids minmax(0,1fr), versais com teto em vw/cqi); kanji das cortinas em telas largas; amarra redesenhada.
+- Lighthouse mobile (servidor local): Perf 69 · A11y 100 · BP 100 · SEO 100. FCP 3,2s, LCP 4,4s, Speed Index 16,3s. Otimização pendente.

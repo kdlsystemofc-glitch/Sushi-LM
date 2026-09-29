@@ -4,6 +4,9 @@
   --indigo-950: #061626;
   --indigo-900: #0A1D31;
   --indigo-700: #122740;
+  /* canais RGB para transparências (compatível com Safari < 16.2, sem color-mix) */
+  --indigo-950-rgb: 6 22 38;
+  --indigo-700-rgb: 18 39 64;
   /* Neutros claros */
   --papel: #F7E9CA;
   --papel-suave: #AFA99B;   /* 7,28:1 sobre indigo-900 */
