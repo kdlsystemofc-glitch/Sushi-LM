@@ -25,3 +25,10 @@
 - Corrigido: color-mix → rgb(var(--*-rgb)/a) (Safari < 16.2); fallbacks 100vh/overflow hidden; color-scheme: only light;
   texto a 200% vazava (grids minmax(0,1fr), versais com teto em vw/cqi); kanji das cortinas em telas largas; amarra redesenhada.
 - Lighthouse mobile (servidor local): Perf 69 · A11y 100 · BP 100 · SEO 100. FCP 3,2s, LCP 4,4s, Speed Index 16,3s. Otimização pendente.
+
+## Motion — Fase 1: base global ✅ (tag motion-base)
+- `motion-baseline.md`: auditoria 17/17, Lighthouse mobile mediana 78 (LCP 4,35s).
+- Núcleo: `site/js/motion-boot.js` (modo full/reduced, qualidade high/low, carrega após load+1ª pintura+ocioso ou 1ª interação) e `site/js/motion.js` (Lenis, data-reveal, data-parallax, data-loop, pausa por aba oculta/fora da tela, API __motion.pausar/retomar).
+- GSAP 3.15.0, ScrollTrigger, Lenis 1.3.26 auto-hospedados em `site/js/vendor/`.
+- Testes: `scripts/motion-test.mjs` (global | secao <id> | custo), `scripts/ref.mjs` (estático idêntico), `scripts/lh.mjs`.
+- Lighthouse depois da fase: mediana 78 (LCP 4,44s). 1ª tentativa deu 74: motion rodava antes da 1ª pintura do noren; corrigido esperando pintura + ocioso.

@@ -86,3 +86,8 @@ ul[role="list"] { list-style: none; padding: 0; }
   line-height: 1;
   color: var(--kanji);
 }
+
+/* ── Motion (classes postas pelo motion.js; sem JS nada disto se aplica) ── */
+html.lenis, html.lenis body { height: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
