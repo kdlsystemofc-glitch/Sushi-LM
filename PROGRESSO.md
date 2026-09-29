@@ -32,3 +32,16 @@
 - GSAP 3.15.0, ScrollTrigger, Lenis 1.3.26 auto-hospedados em `site/js/vendor/`.
 - Testes: `scripts/motion-test.mjs` (global | secao <id> | custo), `scripts/ref.mjs` (estático idêntico), `scripts/lh.mjs`.
 - Lighthouse depois da fase: mediana 78 (LCP 4,44s). 1ª tentativa deu 74: motion rodava antes da 1ª pintura do noren; corrigido esperando pintura + ocioso.
+
+## Motion — Fase 2: seções ✅
+| Seção | Motion | Quadro final × estático (1440/390) | LH (mediana 5) |
+|---|---|---|---|
+| 01 Hero | parallax da foto (top). Sem entrada: está acima da dobra | 0,000 / 0,000 % | 78 |
+| 02 Rodízio | foto fade + parallax; título/nota sobem | 0,000 / 0,000 % | 78 |
+| 03 Cozinha | citação/autoria sobem; foto fade + parallax (desktop) | 0,111 / 0,000 % | 78 |
+| 04 Mesa | título + 3 serviços sobem; foto parada (texto em cima) | 0,000 / 0,000 % | 78 |
+| 05 Avaliações | nota, fonte e citação sobem; shibori parado | 0,000 / 0,000 % | 78 |
+| 06 Cardápio | por faixa: nome sobe, foto fade + parallax 0,06 | 0,107 / 0,388 % | 78 |
+| 07 Convite | endereço sobe; borlas: pouso + balanço (único loop) | 0,000 / 0,000 % | 77 |
+- Rejeitados pelo critério visual: balanço do noren e abertura das cortinas (superfícies caras), contagem 0→4,8, estrela/CTA pulsando, vapor/brilho/partículas.
+- Custo (rolagem de 3s por seção, 1440): p95 de quadro 16,7–16,8 ms com e sem motion; script +25–40 ms; estilo/layout +12–29 ms.
