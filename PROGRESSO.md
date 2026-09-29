@@ -12,3 +12,16 @@
 
 ## Próximo
 - Etapa 2: construir o site em `/site` seção por seção (01 → 08), com placeholders comentados onde faltarem fotos e dados.
+
+## Etapa 2 — Construção estática (2026-09-29) ✅
+- Site em `site/` (index.html + css/tokens.css, base.css, secoes.css; fotos em site/assets). Sem JS; motion ainda não feito.
+- Inventário em `assets.md`. Scripts: `scripts/assets.py` (WebP), `scripts/shot.mjs` (screenshots seção/página/costura; `--final`).
+- Commits: design pronto → hero → rodizio → cozinha → mesa → avaliacoes → cardapio → convite → rodape.
+- Push: não feito (GH_TOKEN ausente; repositório sem remote).
+
+## Aberto
+- Sem foto: shimeji (faixa só texto), hot roll (trocado por sobremesas), sushiman (usado close do maçaricado), fachada.
+- Fotos ≤1080px (salão 640px, borrado): sem versões 1600px; candidatas ao prompt A2.
+- Logo real diz "Sushi L&M Delivery" em 150px — confirmar nome/arquivo com o cliente.
+- Pendências do cliente: DESIGN.md §i (preço, horário, WhatsApp/reserva, autorizações).
+- Próximo: fase de motion (DESIGN.md §f).
