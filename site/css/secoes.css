@@ -139,7 +139,7 @@
 .s-cozinha__foto img { width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 @media (min-width: 48rem) {
   .s-cozinha { min-height: clamp(22rem, 36vw, 34rem); }
-  .s-cozinha__foto { position: relative; }
+  .s-cozinha__foto { position: relative; overflow: hidden; }
   .s-cozinha__foto img { position: absolute; inset: 0; aspect-ratio: auto; object-position: 50% 40%; }
   .s-cozinha__frase { font-size: clamp(2rem, 1rem + 2.2vw, 3.25rem); font-size: min(clamp(2rem, 1rem + 2.2vw, 3.25rem), 3.6vw); }
 }
