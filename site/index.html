@@ -76,7 +76,22 @@
            alt="Close de salmão maçaricado com molho tarê e gergelim preto e branco">
     </picture>
   </section>
-  <section id="mesa" class="s-mesa"></section>
+  <section id="mesa" class="s-mesa" aria-labelledby="mesa-titulo">
+    <picture class="s-mesa__foto">
+      <img src="assets/mesa-drink-1080.webp"
+           srcset="assets/mesa-drink-800.webp 800w, assets/mesa-drink-1080.webp 1080w"
+           sizes="100vw" width="1080" height="930" loading="lazy"
+           alt="Drink de morango com gelo e alecrim sobre jogo americano vermelho, com pratos do rodízio ao fundo">
+    </picture>
+    <div class="s-mesa__legenda">
+      <h2 id="mesa-titulo" class="s-mesa__titulo">No salão, na porta ou em casa</h2>
+      <ul class="rotulo s-mesa__servicos" role="list">
+        <li>Refeição no local</li>
+        <li>Retirada na porta</li>
+        <li>Entrega sem contato</li>
+      </ul>
+    </div>
+  </section>
   <section id="avaliacoes" class="s-avaliacoes"></section>
   <section id="cardapio" class="s-cardapio"></section>
   <section id="convite" class="s-convite"></section>
