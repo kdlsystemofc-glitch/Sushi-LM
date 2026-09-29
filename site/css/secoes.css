@@ -171,3 +171,44 @@
   .s-mesa__servicos { flex-direction: column; }
   .s-mesa__servicos li + li::before { content: none; }
 }
+
+/* ═══ 05 · AVALIAÇÕES — shibori SVG (parado) + nota real ═══ */
+.s-avaliacoes__tecido { position: relative; min-height: clamp(12rem, 50vw, 18rem); background: var(--indigo-900); overflow: clip; }
+.shibori { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* trama de linho por cima: o desenho parece tingido no tecido, não impresso */
+.s-avaliacoes__tecido::after { content: ""; position: absolute; inset: 0; background-image: var(--trama), var(--trama); background-size: auto, 120px; }
+.shibori__fundo { fill: var(--indigo-900); }
+.shibori__tinta { fill: var(--papel); fill-opacity: .82; }
+.s-avaliacoes__nota {
+  display: grid; justify-items: center; align-content: center;
+  padding: var(--space-6) var(--gutter);
+  text-align: center;
+  color: var(--tinta);
+}
+.s-avaliacoes__numero {
+  display: flex; align-items: flex-start; gap: .12em;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: var(--fs-hero);
+  line-height: .9;
+  font-variant-numeric: lining-nums;
+}
+.s-avaliacoes__estrela { font-size: .42em; margin-top: .35em; font-family: var(--f-texto); }
+.s-avaliacoes__fonte { margin-top: var(--space-2); font-size: var(--fs-md); }
+.s-avaliacoes__citacao {
+  margin-top: var(--space-5);
+  max-width: var(--measure-citacao);
+  font-style: italic;
+  color: var(--tinta);
+}
+.s-avaliacoes__citacao figcaption {
+  margin-top: var(--space-2);
+  font-style: normal;
+  font-size: var(--fs-xs);
+  letter-spacing: .08em;
+  color: var(--tinta-suave);
+}
+@media (min-width: 48rem) {
+  .s-avaliacoes { min-height: clamp(24rem, 36vw, 34rem); }
+  .s-avaliacoes__tecido { min-height: 0; }
+}
