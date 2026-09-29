@@ -66,11 +66,15 @@
   var vh = window.innerHeight;
   grupos.forEach(function (els, g) {
     var topo = g.getBoundingClientRect().top;
-    if (topo < vh * LIMIAR) return;           // já na tela ou acima: nunca esconder
+    if (topo < vh * LIMIAR) return;           // grupo já na tela ou acima: nunca esconder
+    // e, dentro do grupo, nada que já tenha alguma parte visível na 1ª tela
+    els = els.filter(function (el) { return el.getBoundingClientRect().top >= vh; });
+    if (!els.length) return;
     els.forEach(function (el) { gsap.set(el, estadoInicial(el)); });
     var r = { els: els, grupo: g, feito: false };
     r.st = ScrollTrigger.create({
-      trigger: g, start: 'top ' + (LIMIAR * 100) + '%', once: true,
+      // clamp(): grupos no fim da página (rodapé) que nunca chegam a 65% disparam no fim da rolagem
+      trigger: g, start: 'clamp(top ' + (LIMIAR * 100) + '%)', once: true,
       onEnter: function () { concluir(r, !estado.pausado); }
     });
     estado.reveals.push(r);
@@ -183,11 +187,37 @@
     tResize = setTimeout(function () { estado.parallax.forEach(function (p) { p.montar(); }); ScrollTrigger.refresh(); }, 200);
   });
 
+  /* ── Botão de pausa: só quando há movimento contínuo (full + high: loop e parallax).
+        No reduced e no low só existem entradas curtas (< 5s, WCAG 2.2.2 não exige pausa). ── */
+  var botao = null;
+  function sincronizarBotao() {
+    if (!botao) return;
+    botao.setAttribute('aria-pressed', String(estado.pausado));
+    botao.querySelector('.sr-only').textContent = estado.pausado ? 'Retomar animações' : 'Pausar animações';
+  }
+  function lembrar(v) { try { localStorage.setItem('sushilm-motion-pausado', v ? '1' : '0'); } catch (e) {} }
+  if (full && high) {
+    botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'motion-pausa';
+    botao.innerHTML = '<span class="motion-pausa__icone" aria-hidden="true"></span><span class="sr-only"></span>';
+    botao.addEventListener('click', function () {
+      estado.pausado ? retomar() : pausar();
+      lembrar(estado.pausado);
+      sincronizarBotao();
+    });
+    document.body.appendChild(botao);
+    var salvo = null;
+    try { salvo = localStorage.getItem('sushilm-motion-pausado'); } catch (e) {}
+    if (salvo === '1') pausar();
+    sincronizarBotao();
+  }
+
   /* ── API (botão de pausa e testes) ─────────────────────────────── */
   window.__motion = {
     cfg: cfg, estado: estado, pronto: true,
-    pausar: pausar, retomar: retomar,
-    alternar: function () { estado.pausado ? retomar() : pausar(); return estado.pausado; },
+    pausar: function () { pausar(); sincronizarBotao(); }, retomar: function () { retomar(); sincronizarBotao(); },
+    alternar: function () { estado.pausado ? retomar() : pausar(); sincronizarBotao(); return estado.pausado; },
     // testes: loops e parallax em repouso até a próxima rolagem
     repousar: function () {
       estado.loops.forEach(function (l) { l.tl.pause(); gsap.set(l.el, l.repouso); });

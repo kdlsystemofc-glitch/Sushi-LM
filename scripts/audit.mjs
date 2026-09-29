@@ -15,7 +15,7 @@ const out = resolve(ROOT, 'screenshots/responsivo'); mkdirSync(out, { recursive:
 const inspect = (W) => {
   const innerWidth = W; // largura pedida; na emulação mobile o innerWidth real cresce com o conteúdo
   const r = { overflowX: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth, ...[...document.querySelectorAll('body *:not(svg *)')].map(e => Math.ceil(e.getBoundingClientRect().right))) - innerWidth, cortado: [], sobreposto: [], toque: [], foraDaTela: [] };
-  const vis = e => { const s = getComputedStyle(e); return s.visibility !== 'hidden' && s.display !== 'none' && !e.closest('.sr-only'); };
+  const vis = e => { const s = getComputedStyle(e); if (s.visibility === 'hidden' || s.display === 'none' || e.closest('.sr-only')) return false; for (let a = e; a; a = a.parentElement) if (+getComputedStyle(a).opacity < 0.05) return false; return true; }; // invisível (entrada pendente) não sobrepõe nada
   const nome = e => e.tagName.toLowerCase() + (e.className && typeof e.className === 'string' ? '.' + e.className.trim().split(/\s+/).join('.') : '') + '"' + e.textContent.trim().slice(0, 18) + '"';
   const textos = [...document.querySelectorAll('h1,h2,h3,p,li,a,figcaption,blockquote p,span')].filter(e => vis(e) && e.textContent.trim() && e.getClientRects().length);
   for (const e of textos) {

@@ -54,6 +54,8 @@ async function global() {
     ['full/low 390', '?motion=full&quality=low', [390, 844], {}],
     ['reduced 1440', '', [1440, 900], { reduced: true }],
     ['auto 390', '', [390, 844], {}],
+    ['full/high 768x1024', '?motion=full&quality=high', [768, 1024], {}],
+    ['full/high 844x390', '?motion=full&quality=high', [844, 390], {}],
   ]) {
     const { ctx, page, erros } = await abrir(q, vp, o);
     const cfg = await page.evaluate(() => window.__motion.cfg);

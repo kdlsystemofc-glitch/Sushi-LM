@@ -45,3 +45,11 @@
 | 07 Convite | endereço sobe; borlas: pouso + balanço (único loop) | 0,000 / 0,000 % | 77 |
 - Rejeitados pelo critério visual: balanço do noren e abertura das cortinas (superfícies caras), contagem 0→4,8, estrela/CTA pulsando, vapor/brilho/partículas.
 - Custo (rolagem de 3s por seção, 1440): p95 de quadro 16,7–16,8 ms com e sem motion; script +25–40 ms; estilo/layout +12–29 ms.
+
+## Motion — Fase 3: rodapé, pausa, coerência ✅ (tag motion-pronto)
+- Rodapé: CTA e endereço com entrada. Bug corrigido no núcleo: grupos no fim da página nunca chegavam a 65% (768x1024) → gatilho com clamp(); nada parcialmente visível na 1ª tela é escondido.
+- Botão de pausa (full+high), lembrado no localStorage. Menu: o site não tem menu; não foi criado.
+- `motion-inventario.md`; orçamento por rolagem dentro do teto; parallax do cardápio retirado (seção mais agitada).
+- Vídeo: screenshots/motion/video/*.webm (gitignored).
+- Lighthouse final: mediana 78 (= base), LCP 4,43s, TBT 0, CLS 0.
+- Push: não feito (GH_TOKEN ausente, sem remote).

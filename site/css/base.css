@@ -91,3 +91,27 @@ ul[role="list"] { list-style: none; padding: 0; }
 html.lenis, html.lenis body { height: auto; }
 .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* Botão de pausa das animações (criado pelo motion.js, só no modo full) */
+.motion-pausa {
+  position: fixed; z-index: 50;
+  right: max(var(--space-3), env(safe-area-inset-right));
+  bottom: max(var(--space-3), env(safe-area-inset-bottom));
+  display: grid; place-items: center;
+  width: 2.75rem; height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--fio);
+  border-radius: 50%;
+  background: var(--indigo-950);
+  color: var(--papel);
+  cursor: pointer;
+}
+.motion-pausa:hover { border-color: var(--salmao-claro); color: var(--salmao-claro); }
+/* ícone: duas barras (pausar) ou triângulo (retomar) */
+.motion-pausa__icone { width: .75rem; height: .8rem; border-inline: .22rem solid currentColor; }
+.motion-pausa[aria-pressed="true"] .motion-pausa__icone {
+  width: 0; height: 0; margin-left: .2rem;
+  border-inline: 0;
+  border-left: .7rem solid currentColor;
+  border-block: .45rem solid transparent;
+}
