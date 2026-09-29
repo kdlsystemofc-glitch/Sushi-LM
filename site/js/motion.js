@@ -125,17 +125,19 @@
   /* ── Loops (só full + high, só na tela) ────────────────────────── */
   var LOOPS = {
     // borla pendurada: pouso curto e balanço de pêndulo
-    balanco: function (el) {
-      var tl = gsap.timeline({ paused: true, repeat: -1, yoyo: true, defaults: { ease: 'sine.inOut' } });
-      gsap.set(el, { rotation: -2.5, transformOrigin: '50% 0%' });
-      tl.to(el, { rotation: 2.5, duration: 2.6 });
-      return { tl: tl, repouso: { rotation: 0 } };
+    balanco: function (el, i) {
+      gsap.set(el, { transformOrigin: '50% 0%' });
+      var tl = gsap.timeline({ paused: true });
+      tl.fromTo(el, { y: -10, rotation: 0 }, { y: 0, duration: 0.9, ease: 'back.out(2.2)' })     // pouso
+        .to(el, { rotation: 2.5, duration: 1.3, ease: 'sine.out' })
+        .add(gsap.fromTo(el, { rotation: 2.5 }, { rotation: -2.5, duration: 2.6 + (i % 2) * 0.35, ease: 'sine.inOut', repeat: -1, yoyo: true, immediateRender: false }));
+      return { tl: tl, repouso: { rotation: 0, y: 0 } };
     }
   };
   if (full && high) {
-    document.querySelectorAll('[data-loop]').forEach(function (el) {
+    document.querySelectorAll('[data-loop]').forEach(function (el, i) {
       var f = LOOPS[el.dataset.loop]; if (!f) return;
-      var l = f(el); l.el = el;
+      var l = f(el, i); l.el = el;   // períodos levemente diferentes: nada balança em fase perfeita
       var area = el.closest('section, header, footer') || el;
       l.st = ScrollTrigger.create({
         trigger: area, start: 'top bottom', end: 'bottom top',

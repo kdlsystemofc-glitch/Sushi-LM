@@ -317,14 +317,14 @@
 .cortina--esq { left: 0;  clip-path: polygon(0 0, 100% 0, 88% 22%, 58% 50%, 34% 62%, 46% 76%, 72% 100%, 0 100%); }
 .cortina--dir { right: 0; clip-path: polygon(0 0, 100% 0, 100% 100%, 28% 100%, 54% 76%, 66% 62%, 42% 50%, 12% 22%); }
 /* amarra: cordão arredondado que abraça o tecido + borla pendurada */
-.cortina::before,
 .cortina::after { content: ""; position: absolute; background: linear-gradient(to bottom, var(--kanji), var(--madeira)); }
 .cortina::after {
   top: 60%;
   width: 38%; height: clamp(.5rem, 1.6%, .9rem);
   border-radius: 999px;
 }
-.cortina::before {
+.cortina__borla {
+  position: absolute;
   top: 61%;
   width: clamp(.3rem, 1%, .5rem); height: clamp(2.5rem, 9%, 5rem);
   border-radius: 0 0 999px 999px;
@@ -332,8 +332,8 @@
 }
 .cortina--esq::after  { left: 0;  transform: rotate(-7deg); transform-origin: left center; }
 .cortina--dir::after  { right: 0; transform: rotate(7deg);  transform-origin: right center; }
-.cortina--esq::before { left: 30%; }
-.cortina--dir::before { right: 30%; }
+.cortina--esq .cortina__borla { left: 30%; }
+.cortina--dir .cortina__borla { right: 30%; }
 .cortina__kanji { position: absolute; top: 24%; font-size: clamp(2.5rem, 1.5rem + 4vw, 5.5rem); }
 .cortina--esq .cortina__kanji { left: 18%; }
 .cortina--dir .cortina__kanji { right: 18%; }
