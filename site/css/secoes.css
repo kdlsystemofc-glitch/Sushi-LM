@@ -258,3 +258,80 @@
   letter-spacing: .08em;
   color: var(--papel-suave);
 }
+
+/* ═══ 07 · CONVITE — cortinas amarradas (CSS) + foto real do salão numa janela ═══ */
+.s-convite {
+  --janela: min(100%, 46rem);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  min-height: clamp(34rem, 62vw, 48rem);
+  overflow: clip;
+  background: var(--indigo-950);
+}
+.s-convite__janela {
+  position: absolute; inset-block: 0; left: 50%; z-index: -2;
+  width: var(--janela);
+  translate: -50% 0;
+}
+.s-convite__janela img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.s-convite__janela::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, var(--indigo-950) 5%, color-mix(in srgb, var(--indigo-950) 55%, transparent) 40%, color-mix(in srgb, var(--indigo-950) 30%, transparent)),
+    linear-gradient(to right, var(--indigo-950), transparent 18% 82%, var(--indigo-950));
+}
+
+.cortina {
+  --largura: max(30%, calc((100% - var(--janela)) / 2 + 5rem));
+  position: absolute; top: 0; bottom: 0; z-index: -1;
+  width: var(--largura);
+  display: grid; justify-items: center; align-content: start;
+  padding-top: 22%;
+  background-color: var(--indigo-900);
+  background-image:
+    var(--trama),
+    repeating-linear-gradient(90deg,
+      color-mix(in srgb, var(--indigo-950) 55%, transparent) 0,
+      transparent 6%,
+      color-mix(in srgb, var(--indigo-700) 70%, transparent) 10%,
+      transparent 14%,
+      color-mix(in srgb, var(--indigo-950) 55%, transparent) 18%),
+    linear-gradient(to bottom, var(--indigo-950), transparent 15%);
+}
+/* amarrada a ~62% da altura; o tecido afunila para a borda externa e abre embaixo */
+.cortina--esq { left: 0;  clip-path: polygon(0 0, 100% 0, 88% 22%, 58% 50%, 34% 62%, 46% 76%, 72% 100%, 0 100%); }
+.cortina--dir { right: 0; clip-path: polygon(0 0, 100% 0, 100% 100%, 28% 100%, 54% 76%, 66% 62%, 42% 50%, 12% 22%); }
+/* faixa da amarra */
+.cortina::after {
+  content: ""; position: absolute; top: 60.5%;
+  width: 30%; height: 1.2%;
+  background: linear-gradient(to bottom, var(--kanji), var(--madeira));
+}
+.cortina--esq::after { left: 4%; }
+.cortina--dir::after { right: 4%; }
+.cortina__kanji { font-size: clamp(2.5rem, 1.5rem + 4vw, 5.5rem); }
+.cortina--esq .cortina__kanji { translate: -18% 0; }
+.cortina--dir .cortina__kanji { translate: 18% 0; }
+
+.s-convite__texto {
+  padding: var(--space-6) var(--gutter) var(--space-6);
+  text-align: center;
+}
+.s-convite__titulo {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--fs-xl);
+  line-height: 1.05;
+  color: var(--papel);
+}
+.s-convite__bairro { margin-top: var(--space-2); color: var(--papel-suave); font-size: var(--fs-sm); }
+.s-convite__mapa {
+  display: inline-flex; align-items: center; gap: .5em;
+  min-height: 2.75rem; margin-top: var(--space-3);
+  color: var(--papel); text-decoration: none;
+  border-bottom: 1px solid var(--fio);
+}
+.s-convite__mapa:hover { color: var(--salmao-claro); border-color: currentColor; }
