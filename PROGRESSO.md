@@ -59,3 +59,13 @@
 - Bug corrigido: o GSAP lia a escala da animação CSS e congelava a foto em scale(1.14); parallax agora monta depois das animações da foto.
 - Quadros-chave: `node scripts/hero-quadros.mjs` → screenshots/motion/hero-abertura/.
 - Testes: global verde, hero 0,015%/0,052%, auditoria 17/17, estático idêntico. Lighthouse 77 (base 78), LCP 4,43s, SI 3,56s.
+
+## Otimização ✅ (commit "otimizacao pronta")
+- Lighthouse mobile (mediana de 5): **78 → 90** (FCP 3,25→1,19 s · LCP 4,38→3,61 s · SI 3,28→2,23 s · CLS 0 · TBT 0→72 ms). Peso total 795 → 569 KiB. `otimizacao-baseline.md`.
+- Build: `node scripts/build.mjs` (src/ → site/). Fontes locais WOFF2 (Google removido), CSS crítico inline + resto async com noscript, minificação conservadora (fallbacks preservados), JS com terser, `?v=hash`.
+- Imagens: degrau 400w, sizes por breakpoint, fetchpriority retirado do hero (não é o LCP).
+- Shibori: WebP rejeitado (1,6% de pixels); ficou SVG + `content-visibility: auto` (geometria idêntica verificada em 13 larguras).
+- Boot do motion: espera LCP + fim da abertura (animationend) + ocioso; detecção de qualidade adiada.
+- Testes: ref 0,000/0,139 %, sem JS idêntico, abertura do hero idêntica quadro a quadro, auditoria 17/17, motion global e 8 seções verdes, orçamento ok.
+- Não alcançado: 92. Limite = LCP simulado inflado pelas fotos lazy que o Chrome busca no 1º layout; baixar exigiria recomprimir fotos do cliente (visual). TBT 72 ms = 1º estilo/layout com as fontes já prontas (preload); sem preload o FCP sobe 0,9 s.
+- `DEPLOY.md`: cabeçalhos por tipo, compressão, CSP (não configurado).

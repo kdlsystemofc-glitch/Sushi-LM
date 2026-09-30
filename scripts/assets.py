@@ -20,7 +20,8 @@ for slug, (f, box) in JOBS.items():
     im = Image.open(SRC + f).convert('RGB')
     if box: im = im.crop(box)
     w, h = im.size
-    for tw in sorted({min(800, w), w}):
+    # degraus: 400 (celular), 800 e a largura original
+    for tw in sorted({min(400, w), min(800, w), w}):
         out = im if tw == w else im.resize((tw, round(h * tw / w)), Image.LANCZOS)
         name = f'{OUT}{slug}-{tw}.webp'
         out.save(name, 'WEBP', quality=80, method=6)

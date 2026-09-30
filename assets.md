@@ -4,7 +4,7 @@ Gerado por `scripts/assets.py` (recorte + redimensionamento + WebP q80). **Nenhu
 Plates gerados: **nenhum** (`design/plates/` não existe; todo o decorativo é CSS/SVG, conforme o DESIGN.md §d/e).
 
 ## Limite de resolução
-As fotos originais têm no máximo **1080 px** (a do salão, 640 px). **Não existe versão de 1600 px**: ampliar sem IA não acrescenta detalhe. Por isso cada foto sai em 800 px e na largura original. A versão de 1600 px depende do prompt A2 do DESIGN.md (ampliação por IA) **ou** do envio dos originais pelo cliente. Se for ampliada por IA, tem que entrar aqui com a nota "recriada por IA — confirmar com o cliente antes de publicar".
+As fotos originais têm no máximo **1080 px** (a do salão, 640 px). **Não existe versão de 1600 px**: ampliar sem IA não acrescenta detalhe. Por isso cada foto sai em **400 px (degrau de celular, acrescentado na otimização)**, 800 px e na largura original. A versão de 1600 px depende do prompt A2 do DESIGN.md (ampliação por IA) **ou** do envio dos originais pelo cliente. Se for ampliada por IA, tem que entrar aqui com a nota "recriada por IA — confirmar com o cliente antes de publicar".
 
 ## Mapa slot → arquivo
 
@@ -25,3 +25,15 @@ As fotos originais têm no máximo **1080 px** (a do salão, 640 px). **Não exi
 ## Não usados
 - `imgi_38_630043211_…_n.webp`: quase duplicata de `imgi_52` (mesma barca, enquadramento parecido).
 - `imgi_57_619256448_…_n.jpg`: montagem de duas fotos (sushi doce); fica de reserva para uma futura faixa de sobremesas.
+
+## Otimização (2026-09-30)
+- Degrau de 400 px gerado para todas as fotos (mesmo recorte, só redimensionamento) e `sizes` ajustado por breakpoint no `src/index.html`.
+- `fetchpriority="high"` retirado da foto do hero: o candidato a LCP medido é o painel do noren (texto 鮨), e a foto começa invisível na abertura.
+- Shibori: foi testada uma pré-renderização em WebP (400/800/1600) para tirar o filtro SVG da 1ª pintura. **Rejeitada**: 1,6% de diferença de pixels (o filtro do Chrome depende da resolução). O shibori continua SVG inline, com `content-visibility: auto`. Nenhum plate foi adicionado.
+
+## Fontes (site/fonts, auto-hospedadas)
+| Arquivo | Família | Origem | Licença |
+|---|---|---|---|
+| `cormorant-garamond-latin.woff2` | Cormorant Garamond (variável, pesos 500 e 600 usados) | Google Fonts, subconjunto latin | SIL Open Font License 1.1 |
+| `source-serif-4-latin.woff2` | Source Serif 4 (variável: wght + opsz) | Google Fonts, subconjunto latin | SIL Open Font License 1.1 |
+| `shippori-mincho-sushi.woff2` | Shippori Mincho 700, só o glifo 鮨 | Google Fonts (`text=鮨`) | SIL Open Font License 1.1 |

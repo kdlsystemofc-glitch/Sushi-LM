@@ -243,11 +243,17 @@
 
 /* ═══ 05 · AVALIAÇÕES — shibori SVG (parado) + nota real ═══ */
 .s-avaliacoes__tecido { position: relative; min-height: clamp(12rem, 50vw, 18rem); background: var(--indigo-900); overflow: hidden; overflow: clip; }
+/* O filtro do shibori (turbulência + deslocamento + desfoque) custava ~70ms na 1ª pintura mesmo
+   fora da tela. content-visibility: auto pula a pintura até a seção se aproximar e pinta o MESMO
+   SVG depois (uma pré-renderização em WebP foi testada e rejeitada: 1,6% de diferença de pixels).
+   Layout intacto: a caixa é esticada pela grade (desktop) ou tem min-height (celular).
+   Sem suporte: ignorado. */
+.s-avaliacoes__tecido { content-visibility: auto; contain-intrinsic-size: auto clamp(12rem, 50vw, 18rem); }  /* = min-height */
 .shibori { position: absolute; inset: 0; width: 100%; height: 100%; }
-/* trama de linho por cima: o desenho parece tingido no tecido, não impresso */
-.s-avaliacoes__tecido::after { content: ""; position: absolute; inset: 0; background-image: var(--trama), var(--trama); background-size: auto, 120px; }
 .shibori__fundo { fill: var(--indigo-900); }
 .shibori__tinta { fill: var(--papel); fill-opacity: .82; }
+/* trama de linho por cima: o desenho parece tingido no tecido, não impresso */
+.s-avaliacoes__tecido::after { content: ""; position: absolute; inset: 0; background-image: var(--trama), var(--trama); background-size: auto, 120px; }
 .s-avaliacoes__nota {
   display: grid; justify-items: center; align-content: center;
   padding: var(--space-6) var(--gutter);
@@ -279,7 +285,7 @@
 }
 @media (min-width: 48rem) {
   .s-avaliacoes { min-height: clamp(24rem, 36vw, 34rem); }
-  .s-avaliacoes__tecido { min-height: 0; }
+  .s-avaliacoes__tecido { min-height: 0; contain-intrinsic-size: auto 0px; }
 }
 
 /* ═══ 06 · CARDÁPIO — faixas alternadas índigo/linho, foto se funde na cor ═══ */

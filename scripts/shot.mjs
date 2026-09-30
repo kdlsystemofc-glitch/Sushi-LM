@@ -17,7 +17,8 @@ mkdirSync(out, { recursive: true });
 
 // Regra do projeto: nada de /design dentro do site.
 const html = readFileSync(resolve(ROOT, 'site/index.html'), 'utf8');
-const css = ['tokens', 'base', 'secoes'].map(f => { try { return readFileSync(resolve(ROOT, `site/css/${f}.css`), 'utf8'); } catch { return ''; } }).join('\n');
+// CSS crítico está inline no index.html; o resto em site.min.css (gerado por scripts/build.mjs)
+const css = (() => { try { return readFileSync(resolve(ROOT, 'site/css/site.min.css'), 'utf8'); } catch { return ''; } })();
 if (/design\//i.test(html + css)) { console.error('ERRO: referência a /design no site'); process.exitCode = 1; }
 
 const browser = await chromium.launch();
@@ -32,6 +33,8 @@ for (const w of widths) {
   });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   if (overflow > 0) console.warn(`AVISO ${w}px: rolagem horizontal de ${overflow}px`);
+  // captura de página inteira não rola: pinta o que usa content-visibility: auto (layout idêntico, ver ref.mjs)
+  await page.addStyleTag({ content: '*{content-visibility:visible!important}' });
   await page.screenshot({ path: `${out}/${w}-pagina.png`, fullPage: true, animations: 'disabled' });
   if (!final) {
     const el = page.locator(`#${id}`);

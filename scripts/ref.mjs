@@ -16,6 +16,13 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   const p = await b.newPage({ viewport: { width: w, height: h } });
   await p.goto(URL, { waitUntil: 'networkidle' });
   await p.evaluate(async () => { await document.fonts.ready; document.querySelectorAll('img[loading="lazy"]').forEach(i => i.loading = 'eager'); await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
+  // content-visibility: auto não pinta o que está fora da viewport, e a captura de página inteira
+  // não rola. 1º prova que a propriedade não mexe no layout; depois desliga só para pintar.
+  const geo = () => p.evaluate(() => JSON.stringify([document.documentElement.scrollHeight, ...[...document.querySelectorAll('[style*="content-visibility"], .s-avaliacoes__tecido')].map(e => { const r = e.getBoundingClientRect(); return [r.top + scrollY, r.height, r.width].map(Math.round); })]));
+  const g1 = await geo();
+  await p.addStyleTag({ content: '*{content-visibility:visible!important}' });
+  const g2 = await geo();
+  if (g1 !== g2) { console.log(`✗ ${w}: content-visibility muda o layout ${g1} → ${g2}`); falhou = true; }
   const buf = await p.screenshot({ fullPage: true, animations: 'disabled' });  // abertura do hero: compara o estado final
   const f = resolve(dir, `aprovado-${w}.png`);
   if (modo === 'capturar' || !existsSync(f)) { writeFileSync(f, buf); console.log('capturado', w); }
