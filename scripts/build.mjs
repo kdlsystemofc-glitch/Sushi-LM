@@ -75,7 +75,90 @@ const inlineJS = (await minify(`(function(){
   if(location.protocol!=='file:'){${JSON.stringify(FONTES_PRELOAD)}.forEach(function(f){var l=d.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href=f;h.appendChild(l);});}
   // navegador sem suporte a rel=preload: carrega o CSS restante do jeito clássico
   var t=d.createElement('link');if(!(t.relList&&t.relList.supports&&t.relList.supports('preload'))){t.rel='stylesheet';t.href=${JSON.stringify(cssHref)};h.appendChild(t);}
+  // manifest só em http(s): em file:// o Chrome bloqueia o fetch (CORS) e registra erro no console
+  if(location.protocol!=='file:'){var m=d.createElement('link');m.rel='manifest';m.href='site.webmanifest';h.appendChild(m);}
 })();`, opts)).code;
+
+// ── SEO local (só dado real do CLIENTE.md; domínio em seo.config.json) ─
+const seoCfg = JSON.parse(readFileSync(resolve(ROOT, 'seo.config.json'), 'utf8'));
+const DOM = seoCfg.dominio ? String(seoCfg.dominio).replace(/\/+$/, '') : null;
+if (DOM && !/^https:\/\/[^/]+$/.test(DOM)) throw new Error('seo.config.json: "dominio" deve ser https://host, sem caminho');
+const abs = p => `${DOM}/${p}`;
+const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+const SEO = {
+  nome: 'Sushi LM',
+  titulo: 'Sushi LM — Rodízio japonês em Rudge Ramos',
+  descricao: 'Restaurante japonês com rodízio na R. Afonsina, 244, Rudge Ramos, São Bernardo do Campo. Refeição no local, retirada e entrega.',
+  ogImagem: 'assets/og-sushi-lm.jpg',
+  ogAlt: 'Noren índigo com o kanji 鮨 e o nome Sushi LM, Rudge Ramos, São Bernardo do Campo',
+  // plus code do Google "8CWJ+4R Rudge Ramos" → 588M8CWJ+4R (precisão ~14 m)
+  lat: -23.654688, lng: -46.567937,
+  mapa: 'https://www.google.com/maps/search/?api=1&query=Sushi%20LM%2C%20R.%20Afonsina%2C%20244%20-%20Rudge%20Ramos%2C%20S%C3%A3o%20Bernardo%20do%20Campo%20-%20SP'
+};
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: SEO.nome,
+  servesCuisine: 'Japonesa',
+  address: { '@type': 'PostalAddress', streetAddress: 'R. Afonsina, 244 - Rudge Ramos', addressLocality: 'São Bernardo do Campo', addressRegion: 'SP', postalCode: '09633-000', addressCountry: 'BR' },
+  geo: { '@type': 'GeoCoordinates', latitude: SEO.lat, longitude: SEO.lng },
+  hasMap: SEO.mapa,
+  telephone: '+55 11 94032-0412',
+  amenityFeature: ['Refeição no local', 'Retirada na porta', 'Entrega sem contato'].map(n => ({ '@type': 'LocationFeatureSpecification', name: n, value: true })),
+  ...(DOM ? { url: abs(''), image: abs(SEO.ogImagem) } : {})
+};
+const seoDependeDominio = [
+  `<link rel="canonical" href="${DOM ? abs('') : 'https://SEU-DOMINIO/'}">`,
+  `<meta property="og:url" content="${DOM ? abs('') : 'https://SEU-DOMINIO/'}">`,
+  `<meta property="og:image" content="${DOM ? abs(SEO.ogImagem) : 'https://SEU-DOMINIO/' + SEO.ogImagem}">`,
+  `<meta property="og:image:width" content="1200">`,
+  `<meta property="og:image:height" content="630">`,
+  `<meta property="og:image:type" content="image/jpeg">`,
+  `<meta property="og:image:alt" content="${esc(SEO.ogAlt)}">`,
+  `<meta name="twitter:image" content="${DOM ? abs(SEO.ogImagem) : 'https://SEU-DOMINIO/' + SEO.ogImagem}">`,
+  `<meta name="twitter:image:alt" content="${esc(SEO.ogAlt)}">`
+];
+const seoHead = [
+  ...(DOM ? seoDependeDominio : [`<!-- Aguardando o domínio (seo.config.json → "dominio"). Rodar node scripts/build.mjs depois de preencher:\n${seoDependeDominio.map(l => '  ' + l.replace(/--/g, '&#45;&#45;')).join('\n')}\n-->`]),
+  `<meta property="og:type" content="website">`,
+  `<meta property="og:locale" content="pt_BR">`,
+  `<meta property="og:site_name" content="${SEO.nome}">`,
+  `<meta property="og:title" content="${esc(SEO.titulo)}">`,
+  `<meta property="og:description" content="${esc(SEO.descricao)}">`,
+  `<meta name="twitter:card" content="summary_large_image">`,
+  `<meta name="twitter:title" content="${esc(SEO.titulo)}">`,
+  `<meta name="twitter:description" content="${esc(SEO.descricao)}">`,
+  `<meta name="geo.region" content="BR-SP">`,
+  `<meta name="geo.placename" content="São Bernardo do Campo">`,
+  `<meta name="geo.position" content="${SEO.lat};${SEO.lng}">`,
+  `<meta name="ICBM" content="${SEO.lat}, ${SEO.lng}">`,
+  `<link rel="icon" href="favicon.ico" sizes="48x48">`,
+  `<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">`,
+  `<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">`,
+  `<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">`,
+  `<!-- JSON-LD: só dado confirmado no CLIENTE.md. NÃO publicados até o cliente confirmar (DESIGN.md §i):
+  priceRange (Google: "R$ 80–100 por pessoa", informado por usuários, não é preço oficial) ·
+  openingHoursSpecification (só "fecha 15:30 · reabre 18:30" de um único dia) ·
+  acceptsReservations · hasMenu (link wa.me incompleto) · sameAs (Instagram) · logo e alternateName ("L&amp;M" no logo × "LM" no Google).
+  aggregateRating: omitido de propósito (avaliações de terceiros não se marcam no próprio site). -->`,
+  `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`
+].join('\n');
+
+// robots, sitemap, manifest
+writeFileSync(resolve(SITE, 'robots.txt'), `User-agent: *\nAllow: /\n\n${DOM ? `Sitemap: ${abs('sitemap.xml')}` : '# Sitemap: https://SEU-DOMINIO/sitemap.xml   (ativa sozinho quando seo.config.json tiver o domínio)'}\n`);
+writeFileSync(resolve(SITE, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${DOM
+  ? `  <url>\n    <loc>${abs('')}</loc>\n    <lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>\n  </url>\n`
+  : '  <!-- Sem URL até existir o domínio (seo.config.json). O sitemap exige endereço absoluto. -->\n'}</urlset>\n`);
+writeFileSync(resolve(SITE, 'site.webmanifest'), JSON.stringify({
+  name: 'Sushi LM — Restaurante japonês', short_name: 'Sushi LM', lang: 'pt-BR',
+  start_url: './', scope: './', display: 'browser',
+  background_color: '#061626', theme_color: '#0A1D31',
+  icons: [
+    { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+    { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    { src: 'icons/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+  ]
+}, null, 2) + '\n');
 const head = [
   `<script>${inlineJS}</script>`,
   `<style>${critico}</style>`,
@@ -83,8 +166,8 @@ const head = [
   `<noscript><link rel="stylesheet" href="${cssHref}"></noscript>`,
   `<script src="js/motion-boot.min.js?v=${hash(bootMin)}" defer></script>`
 ].join('\n');
-const html = ler('index.html').replace(/<!-- build:head[^>]*-->/, head);
-if (html.includes('build:head')) throw new Error('marcador build:head não substituído');
+const html = ler('index.html').replace(/<!-- build:head[^>]*-->/, head).replace(/<!-- build:seo[^>]*-->/, seoHead);
+if (/build:(head|seo)/.test(html)) throw new Error('marcador build:head/build:seo não substituído');
 writeFileSync(resolve(SITE, 'index.html'), html);
 
 // ── Relatório de peso ─────────────────────────────────────────────────

@@ -69,3 +69,10 @@
 - Testes: ref 0,000/0,139 %, sem JS idêntico, abertura do hero idêntica quadro a quadro, auditoria 17/17, motion global e 8 seções verdes, orçamento ok.
 - Não alcançado: 92. Limite = LCP simulado inflado pelas fotos lazy que o Chrome busca no 1º layout; baixar exigiria recomprimir fotos do cliente (visual). TBT 72 ms = 1º estilo/layout com as fontes já prontas (preload); sem preload o FCP sobe 0,9 s.
 - `DEPLOY.md`: cabeçalhos por tipo, compressão, CSP (não configurado).
+
+## SEO local ✅ (commit "seo pronto")
+- `seo.config.json` → `"dominio": null`. Tudo que depende de domínio (canonical, og:url/og:image, twitter:image, url/image do JSON-LD, sitemap, linha Sitemap do robots) fica comentado e se ativa no build quando preenchido (testado com domínio de exemplo e revertido).
+- JSON-LD `Restaurant`: nome, culinária, endereço, geo (derivado do plus code 8CWJ+4R → 588M8CWJ+4R, ±14 m), mapa, telefone, serviços (amenityFeature). Não publicados: priceRange, horário, reservas, cardápio, redes, logo/alternateName; aggregateRating omitido de propósito.
+- Title (64) e description (148) sem nota/preço/horário. OG/Twitter com imagem 1200×630 do hero sem foto. Ícones do 鮨 (ico, png, apple, maskable), `site.webmanifest`, `robots.txt`, `sitemap.xml`. Manifest só em http(s) (evita erro de CORS em file://).
+- Semântica: 1 h1, h2/h3 em ordem, h2 oculto "Contato" no rodapé, alt na foto do hero.
+- Testes: `node scripts/seo-test.mjs` (30/30), visual 0,000/0,139 %, sem JS idêntico, auditoria 17/17, motion verde. Lighthouse: Perf 90 · A11y 100 · BP 100 · SEO 100.

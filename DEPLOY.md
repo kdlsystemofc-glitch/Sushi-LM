@@ -50,3 +50,12 @@ Referrer-Policy: strict-origin-when-cross-origin
 - Rodar `node scripts/build.mjs` e conferir que `git status` não mostra `site/` alterado sem commit.
 - Pendências do cliente (DESIGN.md §i): preço, horário, WhatsApp/reserva, autorizações de fotos e avaliações. **O site não deve ir ao ar antes disso.**
 - Fotos: nenhuma foi recriada por IA (assets.md).
+
+## SEO: antes de publicar
+1. Preencher `"dominio"` em **`seo.config.json`** (ex.: `"https://www.exemplo.com.br"`, sem barra no fim).
+2. `node scripts/build.mjs`: ativa sozinho `canonical`, `og:url`, `og:image` (absoluta), `twitter:image`, `url`/`image` no JSON-LD, a linha `Sitemap:` do `robots.txt` e a URL do `sitemap.xml`.
+3. `node scripts/seo-test.mjs` precisa sair verde.
+4. Validar com as ferramentas oficiais (Rich Results Test do Google, depurador de compartilhamento do Facebook/WhatsApp) já no domínio.
+5. Google Business Profile: conferir que nome, endereço e telefone do site batem com o perfil (NAP).
+
+Tipos MIME adicionais: `.webmanifest` → `application/manifest+json`, `.ico` → `image/x-icon`, `.xml` → `application/xml`. Cache: `robots.txt`, `sitemap.xml` e `site.webmanifest` com `max-age=3600`; `favicon.ico` e `icons/` com `max-age=2592000`.
