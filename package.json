@@ -1,11 +1,14 @@
 {
   "name": "sushi-lm",
   "version": "1.0.0",
-  "description": "",
+  "description": "Site do Sushi LM (restaurante japonês, Rudge Ramos, São Bernardo do Campo)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/ref.mjs comparar && node scripts/sem-js.mjs && node scripts/audit.mjs && node scripts/motion-test.mjs global && node scripts/seo-test.mjs && node scripts/cliente-teste.mjs",
+    "test:webkit": "node scripts/testar-webkit.mjs",
+    "test:motion": "node scripts/motion-test.mjs global && node scripts/motion-orcamento.mjs",
+    "lighthouse": "node scripts/lh.mjs final 5"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +22,6 @@
     "playwright": "^1.63.0",
     "pngjs": "^7.0.0",
     "terser": "^5.51.2"
-  }
+  },
+  "private": true
 }

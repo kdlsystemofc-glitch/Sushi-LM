@@ -1,4 +1,0 @@
-{
-  "_leia-me": "Único ajuste de SEO. Quando o domínio existir, preencha com a URL completa (ex.: \"https://www.exemplo.com.br\"), sem barra no fim, e rode node scripts/build.mjs. Com null, canonical, og:url, og:image, twitter:image, url/image do JSON-LD e o sitemap ficam comentados.",
-  "dominio": null
-}

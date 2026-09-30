@@ -1,0 +1,53 @@
+{
+  "_leia-me": "ÚNICO arquivo com os dados que ainda faltam do cliente. null = ainda não informado: o site mantém o estado atual e o build lista a pendência. Ao preencher, rode `npm run build` e depois `npm test`. Instruções campo a campo: PENDENCIAS-CLIENTE.md.",
+
+  "dominio": null,
+
+  "nome": {
+    "oficial": null,
+    "_exemplo": "\"Sushi LM\" ou \"Sushi L&M\" (o Google diz LM; o logo diz L & M). Muda título, h1, rodapé, Open Graph e JSON-LD."
+  },
+
+  "whatsapp": {
+    "numeroEhWhatsapp": null,
+    "aceitaReserva": null,
+    "_exemplo": "true/false. Se numeroEhWhatsapp=false, os botões viram ligação (tel:). Se aceitaReserva=true, o botão do rodapé vira \"Reserve pelo WhatsApp\" e o JSON-LD ganha acceptsReservations."
+  },
+
+  "rodizio": {
+    "precoTexto": null,
+    "priceRange": null,
+    "_exemplo": "precoTexto: frase exibida sob \"Rodízio japonês\", ex. \"R$ 00,00 por pessoa · almoço\". priceRange: faixa para o Google, ex. \"R$ 80–100\"."
+  },
+
+  "horarios": null,
+  "_horarios-exemplo": [
+    { "dias": ["Mo", "Tu", "We", "Th", "Fr"], "abre": "11:00", "fecha": "15:30" },
+    { "dias": ["Mo", "Tu", "We", "Th", "Fr"], "abre": "18:30", "fecha": "23:00" }
+  ],
+  "_horarios-leia-me": "Dias: Mo Tu We Th Fr Sa Su. Os horários de \"_horarios-exemplo\" são ILUSTRATIVOS (não são do cliente): copie o formato para \"horarios\" com os dados reais. Aparece no rodapé e vira openingHoursSpecification no JSON-LD.",
+
+  "links": {
+    "cardapio": null,
+    "pedidoOnline": null,
+    "instagram": null,
+    "_exemplo": "URLs completas (https://...). Aparecem no rodapé; cardapio vira hasMenu e instagram vira sameAs no JSON-LD."
+  },
+
+  "autorizacoes": {
+    "fotos": null,
+    "citarAvaliacoesComNome": null,
+    "_exemplo": "fotos=true: o cliente autorizou o uso das fotos (libera a publicação). citarAvaliacoesComNome=false: as citações ficam como \"avaliação no Google\", sem o primeiro nome."
+  },
+
+  "pratos": {
+    "Nigiri de salmão": null,
+    "Temaki de salmão": null,
+    "Shimeji": null,
+    "Sobremesas": null,
+    "_exemplo": "true = confirmado; false = a faixa sai do site."
+  },
+
+  "logoVetor": null,
+  "_logoVetor-exemplo": "Caminho de um SVG em imagens/, ex. \"imagens/logo.svg\". Substitui o logo de 150 px no rodapé e entra como logo no JSON-LD."
+}

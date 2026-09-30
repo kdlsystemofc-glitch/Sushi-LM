@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sushi LM — Rodízio japonês em Rudge Ramos, São Bernardo do Campo</title>
+<title>{{nome}} — Rodízio japonês em Rudge Ramos, São Bernardo do Campo</title>
 <meta name="description" content="Restaurante japonês com rodízio em Rudge Ramos, São Bernardo do Campo: R. Afonsina, 244. Refeição no local, retirada na porta e entrega sem contato.">
 <meta name="theme-color" content="#0A1D31">
-<!-- build:seo (scripts/build.mjs + seo.config.json: canonical, Open Graph, Twitter, geo, ícones, JSON-LD) -->
+<meta name="color-scheme" content="only light">
+<!-- build:seo (scripts/build.mjs + cliente.config.json: canonical, Open Graph, Twitter, geo, ícones, JSON-LD) -->
 <!-- build:head (scripts/build.mjs: preload de fontes, CSS crítico inline, CSS restante sem bloquear, motion-boot) -->
 </head>
 <body>
@@ -24,10 +25,9 @@
     </div>
     <div class="noren__painel noren__painel--dir">
       <div class="noren__marca">
-        <h1 class="versal noren__nome"><span>Sushi</span> <span>LM</span></h1>
+        <h1 class="versal noren__nome">{{nome-h1}}</h1>
         <p class="noren__local"><span>Restaurante japonês</span> <span>Rudge Ramos</span> <span>São Bernardo do Campo</span></p>
-        <!-- PENDÊNCIA-CLIENTE: confirmar que (11) 94032-0412 é WhatsApp. -->
-        <a class="rotulo noren__cta" href="https://wa.me/5511940320412">WhatsApp <span aria-hidden="true">→</span></a>
+        <!-- cliente:cta-hero -->
       </div>
     </div>
   </div>
@@ -46,19 +46,18 @@
       <div class="s-rodizio__legenda">
         <h2 id="rodizio-titulo" class="versal s-rodizio__titulo fio fio--escuro" data-reveal>Rodízio japonês</h2>
         <p class="s-rodizio__nota" data-reveal>O mais pedido da casa, segundo o Google.</p>
-        <!-- PENDÊNCIA-CLIENTE: valor oficial do rodízio (almoço/jantar/fim de semana) e o que inclui.
-             O Google mostra "R$ 80–100 por pessoa" informado por usuários: não é preço oficial, não publicar. -->
+        <!-- cliente:preco -->
       </div>
     </div>
   </section>
   <section id="cozinha" class="s-cozinha split split--48-52" aria-labelledby="cozinha-titulo">
     <div class="s-cozinha__texto tecido">
-      <!-- PENDÊNCIA-CLIENTE: autorização para citar avaliações do Google com o primeiro nome do autor. -->
+      <!-- cliente:aviso-avaliacoes -->
       <figure class="s-cozinha__citacao">
         <blockquote>
           <p id="cozinha-titulo" class="versal s-cozinha__frase fio" role="heading" aria-level="2" data-reveal>A comida sempre é fresquinha</p>
         </blockquote>
-        <figcaption class="s-cozinha__autor" data-reveal>Karlen F., avaliação no Google</figcaption>
+        <figcaption class="s-cozinha__autor" data-reveal>{{autoria:Karlen F.}}</figcaption>
       </figure>
     </div>
     <picture class="s-cozinha__foto">
@@ -112,13 +111,13 @@
       <!-- Número em 29/09/2026 (CLIENTE.md). Atualizar antes de publicar. -->
       <figure class="s-avaliacoes__citacao" data-reveal>
         <blockquote><p>“Uma ótima opção de rodízio com ótimo custo benefício.”</p></blockquote>
-        <figcaption>Anderson F., avaliação no Google</figcaption>
+        <figcaption>{{autoria:Anderson F.}}</figcaption>
       </figure>
     </div>
   </section>
   <section id="cardapio" class="s-cardapio" aria-labelledby="cardapio-titulo">
     <h2 id="cardapio-titulo" class="sr-only">Destaques do cardápio</h2>
-    <!-- PENDÊNCIA-CLIENTE: confirmar nomes dos pratos e se fazem parte do rodízio. -->
+    <!-- cliente:aviso-pratos -->
     <ul class="cardapio" role="list">
       <li class="prato prato--indigo" data-reveal-group>
         <h3 class="versal prato__nome fio" data-reveal>Nigiri de salmão</h3>
@@ -158,7 +157,6 @@
     <div class="s-convite__texto">
       <h2 id="convite-titulo" class="s-convite__titulo" data-reveal>R. Afonsina, 244</h2>
       <p class="s-convite__bairro" data-reveal>Rudge Ramos · São Bernardo do Campo · SP</p>
-      <!-- PENDÊNCIA-CLIENTE: horário completo por dia da semana (Google mostra só "fecha 15:30 · reabre 18:30" num dia). -->
       <a class="rotulo s-convite__mapa" data-reveal href="https://www.google.com/maps/search/?api=1&amp;query=Sushi%20LM%2C%20R.%20Afonsina%2C%20244%20-%20Rudge%20Ramos%2C%20S%C3%A3o%20Bernardo%20do%20Campo%20-%20SP">Abrir no mapa <span aria-hidden="true">→</span></a>
     </div>
   </section>
@@ -167,14 +165,13 @@
 <footer id="rodape" class="s-rodape tecido" aria-labelledby="rodape-titulo">
   <h2 id="rodape-titulo" class="sr-only">Contato</h2>
   <div class="wrap s-rodape__corpo">
-    <!-- PENDÊNCIA-CLIENTE: confirmar que o número é WhatsApp e se aceitam reserva (o mockup dizia "Reserve"). -->
-    <a class="s-rodape__cta" data-reveal href="https://wa.me/5511940320412">Fale no WhatsApp <span aria-hidden="true">→</span></a>
+    <!-- cliente:cta-rodape -->
     <address class="s-rodape__dados" data-reveal>
-      <img class="s-rodape__logo" src="assets/logo-150.webp" width="150" height="150" loading="lazy" alt="Logo Sushi L&amp;M Delivery">
-      <p class="rotulo">Sushi LM · R. Afonsina, 244 · Rudge Ramos · São Bernardo do Campo – SP · 09633-000</p>
+      {{logo-rodape}}
+      <p class="rotulo">{{nome}} · R. Afonsina, 244 · Rudge Ramos · São Bernardo do Campo – SP · 09633-000</p>
       <p><a href="tel:+5511940320412">(11) 94032-0412</a></p>
     </address>
-    <!-- PENDÊNCIA-CLIENTE: horário de funcionamento, Instagram, link do pedido on-line. -->
+    <!-- cliente:rodape-extra -->
   </div>
 </footer>
 </body>

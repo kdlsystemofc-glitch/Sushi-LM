@@ -44,6 +44,11 @@ ul[role="list"] { list-style: none; padding: 0; }
   }
 }
 
+/* Telas acima de 2560px (ultrawide, 4K sem zoom): a página para em 160rem e centraliza.
+   As fotos do cliente têm no máximo 1080px e ficariam ampliadas 4–5×. Até 2560px nada muda
+   (todos os valores fluidos já estão no teto do clamp nessa largura). */
+#hero, main, #rodape { max-width: 160rem; margin-inline: auto; }
+
 /* ── Grid ─────────────────────────────────────── */
 .wrap { width: 100%; padding-inline: var(--gutter); margin-inline: auto; max-width: 96rem; }
 

@@ -1,7 +1,9 @@
 // Auditoria responsiva: rolagem horizontal, texto cortado/sobreposto, alvos de toque,
 // console, zoom de texto 200%, fallback de fontes, reduced-motion, dark scheme.
 // Uso: node scripts/audit.mjs [--shots]
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
+// MOTOR=webkit roda no motor do Safari (padrão: chromium)
+const MOTOR = { chromium, webkit }[process.env.MOTOR || 'chromium'];
 import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -9,7 +11,7 @@ import { pathToFileURL } from 'node:url';
 const ROOT = resolve(import.meta.dirname, '..');
 const URL = pathToFileURL(resolve(ROOT, 'site/index.html')).href;
 const SHOTS = process.argv.includes('--shots');
-const TELAS = [[2560,1440],[1920,1080],[1440,900],[1366,768],[1280,720],[1024,768],[768,1024],[430,932],[390,844],[360,740],[320,568],[844,390]];
+const TELAS = [[5120,1440],[3840,2160],[2560,1080],[2560,1440],[1920,1080],[1440,900],[1366,768],[1280,720],[1024,768],[768,1024],[430,932],[390,844],[360,740],[320,568],[844,390]];
 const out = resolve(ROOT, 'screenshots/responsivo'); mkdirSync(out, { recursive: true });
 
 const inspect = (W) => {
@@ -51,7 +53,7 @@ const inspect = (W) => {
   return r;
 };
 
-const browser = await chromium.launch();
+const browser = await MOTOR.launch();
 async function rodar(label, [w, h], opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: opts.reduced ? 'reduce' : 'no-preference', colorScheme: opts.dark ? 'dark' : 'light', isMobile: w < 900, hasTouch: w < 900, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
@@ -72,6 +74,7 @@ async function rodar(label, [w, h], opts = {}) {
   if (SHOTS) await page.addStyleTag({ content: '*{content-visibility:visible!important}' });  // só para a captura
   if (SHOTS) await page.screenshot({ path: `${out}/${label}.png`, fullPage: true, animations: 'disabled' });
   const problemas = [r.overflowX > 0 && `rolagem-x ${r.overflowX}px`, r.cortado.length && `cortado: ${r.cortado.join(' | ')}`, r.sobreposto.length && `sobreposto: ${r.sobreposto.join(' | ')}`, r.toque.length && `toque<44: ${r.toque.join(' | ')}`, r.foraDaTela.length && `fora: ${r.foraDaTela.join(' | ')}`, erros.length && `console: ${erros.join(' | ')}`].filter(Boolean);
+  if (problemas.length) process.exitCode = 1;
   console.log(`${problemas.length ? '✗' : '✓'} ${label}${problemas.length ? '\n    ' + problemas.join('\n    ') : ''}`);
   await ctx.close();
 }

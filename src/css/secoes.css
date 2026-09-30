@@ -113,6 +113,9 @@
   .noren__nome  { animation-delay: 1.85s; }
   .noren__local { animation-delay: 2s; }
   .noren__cta   { animation-delay: 2.15s; }
+  /* visitante que pausou as animações: hero já aberto (classe posta pelo script inline do <head>) */
+  .sem-abertura .noren__painel, .sem-abertura .s-hero__foto, .sem-abertura .s-hero::before,
+  .sem-abertura .noren__kanji, .sem-abertura .noren__marca > * { animation: none; }
 }
 /* fechado (encostados no centro) → abre com força, a barra arrastando atrás →
    a barra passa do ponto → volta balançando até o repouso (= layout estático) */
@@ -166,6 +169,8 @@
 .s-rodizio__legenda { text-align: center; }
 .s-rodizio__titulo { font-size: var(--fs-lg); font-size: min(var(--fs-lg), 8vw); margin-right: calc(-1 * var(--track-versal)); }
 .s-rodizio__nota { margin-top: var(--space-3); color: var(--tinta-suave); font-size: var(--fs-sm); }
+/* Preço (só aparece quando cliente.config.json → rodizio.precoTexto for preenchido) */
+.s-rodizio__preco { margin-top: var(--space-2); font-family: var(--f-display); font-weight: 600; font-size: var(--fs-md); color: var(--tinta); }
 @media (min-width: 48rem) {
   .s-rodizio__foto { aspect-ratio: 16 / 9; }
   .s-rodizio__foto img { object-position: 50% 45%; }
@@ -445,4 +450,9 @@
 .s-rodape__dados .rotulo { max-width: 40ch; line-height: 1.8; }
 .s-rodape__dados a { color: var(--papel); text-decoration-color: var(--fio); text-underline-offset: .25em; display: inline-block; min-height: 2.75rem; line-height: 2.75rem; }
 .s-rodape__logo { width: clamp(3.5rem, 3rem + 1.5vw, 4.5rem); border-radius: 50%; }
+/* Horário e links (só aparecem quando preenchidos em cliente.config.json) */
+.s-rodape__horario { color: var(--papel-suave); line-height: 1.9; text-transform: none; letter-spacing: .06em; }  /* "11h–15h", não "11H–15H" */
+.s-rodape__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 var(--space-4); padding: 0; list-style: none; }
+.s-rodape__links a { display: inline-block; min-height: 2.75rem; line-height: 2.75rem; color: var(--papel); text-decoration-color: var(--fio); text-underline-offset: .25em; }
+.s-rodape__links a:hover { color: var(--salmao-claro); }
 @media (min-width: 48rem) { .s-rodape__dados .rotulo { max-width: none; } }

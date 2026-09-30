@@ -3,7 +3,9 @@
 // - title/description/lang/theme-color, OG/Twitter básicos, ícones
 // - JSON-LD válido, tipo Restaurant, sem campos proibidos/incertos
 // - file://: console limpo e sem <link rel=manifest>; http: manifest/robots/sitemap/ícones 200
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
+// MOTOR=webkit roda no motor do Safari (padrão: chromium)
+const MOTOR = { chromium, webkit }[process.env.MOTOR || 'chromium'];
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
@@ -20,7 +22,7 @@ const srv = createServer(async (req, res) => {
 }).listen(0);
 const HTTP = `http://localhost:${srv.address().port}/`;
 
-const b = await chromium.launch();
+const b = await MOTOR.launch();
 async function abrir(url) {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   const erros = [];
@@ -66,7 +68,7 @@ let ld = {}; try { ld = JSON.parse(d.ld[0]); ok(true, 'JSON-LD é JSON válido')
 ok(ld['@type'] === 'Restaurant', `@type ${ld['@type']}`);
 const proibidos = ['aggregateRating', 'review', 'priceRange', 'openingHours', 'openingHoursSpecification', 'acceptsReservations'].filter(k => k in ld);
 ok(proibidos.length === 0, `JSON-LD sem campos incertos/proibidos (${proibidos.join(', ') || 'ok'})`);
-const cfg = JSON.parse(readFileSync(resolve(ROOT, 'seo.config.json'), 'utf8'));
+const cfg = JSON.parse(readFileSync(resolve(ROOT, 'cliente.config.json'), 'utf8'));
 ok(cfg.dominio ? !!ld.url : !('url' in ld), `JSON-LD url ${cfg.dominio ? 'com' : 'sem'} domínio configurado`);
 await f.p.close();
 

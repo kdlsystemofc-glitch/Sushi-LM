@@ -2,7 +2,9 @@
 //   node scripts/motion-test.mjs global            regressão global (modos, console, nada preso, regra dos decorativos, pausa)
 //   node scripts/motion-test.mjs secao <id>        quadros-chave x estático, navegação rápida, custo da seção
 //   node scripts/motion-test.mjs custo             custo da página inteira: motion x sem motion
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
+// MOTOR=webkit roda no motor do Safari (padrão: chromium)
+const MOTOR = { chromium, webkit }[process.env.MOTOR || 'chromium'];
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -12,7 +14,7 @@ import pixelmatch from 'pixelmatch';
 const ROOT = resolve(import.meta.dirname, '..');
 const BASE = pathToFileURL(resolve(ROOT, 'site/index.html')).href;
 const [cmd = 'global', alvo] = process.argv.slice(2);
-const browser = await chromium.launch();
+const browser = await MOTOR.launch();
 let falhas = 0;
 const ok = (c, msg) => { console.log(`${c ? '✓' : '✗'} ${msg}`); if (!c) falhas++; };
 

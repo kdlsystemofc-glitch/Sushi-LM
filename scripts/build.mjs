@@ -12,6 +12,7 @@ import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { minify } from 'terser';
+import { aplicarCliente } from './cliente.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const SRC = resolve(ROOT, 'src'), SITE = resolve(ROOT, 'site');
@@ -75,22 +76,28 @@ const inlineJS = (await minify(`(function(){
   if(location.protocol!=='file:'){${JSON.stringify(FONTES_PRELOAD)}.forEach(function(f){var l=d.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href=f;h.appendChild(l);});}
   // navegador sem suporte a rel=preload: carrega o CSS restante do jeito clássico
   var t=d.createElement('link');if(!(t.relList&&t.relList.supports&&t.relList.supports('preload'))){t.rel='stylesheet';t.href=${JSON.stringify(cssHref)};h.appendChild(t);}
+  // quem pausou as animações (botão, lembrado no navegador) não revê a abertura do noren ao recarregar
+  try{if(localStorage.getItem('sushilm-motion-pausado')==='1')d.documentElement.classList.add('sem-abertura');}catch(e){}
   // manifest só em http(s): em file:// o Chrome bloqueia o fetch (CORS) e registra erro no console
   if(location.protocol!=='file:'){var m=d.createElement('link');m.rel='manifest';m.href='site.webmanifest';h.appendChild(m);}
 })();`, opts)).code;
 
-// ── SEO local (só dado real do CLIENTE.md; domínio em seo.config.json) ─
-const seoCfg = JSON.parse(readFileSync(resolve(ROOT, 'seo.config.json'), 'utf8'));
-const DOM = seoCfg.dominio ? String(seoCfg.dominio).replace(/\/+$/, '') : null;
-if (DOM && !/^https:\/\/[^/]+$/.test(DOM)) throw new Error('seo.config.json: "dominio" deve ser https://host, sem caminho');
+// ── Dados do cliente (cliente.config.json) + SEO local ──────────────────
+// CLIENTE_CONFIG=outro.json permite testar o build com dados de exemplo sem tocar no arquivo real.
+const cliCfgPath = resolve(ROOT, process.env.CLIENTE_CONFIG || 'cliente.config.json');
+const cliCfg = JSON.parse(readFileSync(cliCfgPath, 'utf8'));
+const DOM = cliCfg.dominio ? String(cliCfg.dominio).replace(/\/+$/, '') : null;
+if (DOM && !/^https:\/\/[^/]+$/.test(DOM)) throw new Error('cliente.config.json: "dominio" deve ser https://host, sem caminho');
+const cli = aplicarCliente(ler('index.html'), cliCfg, { ROOT, SITE });
+if (!DOM) cli.pend.unshift('dominio (canonical, og:url/og:image, sitemap, robots)');
 const abs = p => `${DOM}/${p}`;
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 const SEO = {
-  nome: 'Sushi LM',
-  titulo: 'Sushi LM — Rodízio japonês em Rudge Ramos',
+  nome: cli.nome,
+  titulo: `${cli.nome} — Rodízio japonês em Rudge Ramos`,
   descricao: 'Restaurante japonês com rodízio na R. Afonsina, 244, Rudge Ramos, São Bernardo do Campo. Refeição no local, retirada e entrega.',
   ogImagem: 'assets/og-sushi-lm.jpg',
-  ogAlt: 'Noren índigo com o kanji 鮨 e o nome Sushi LM, Rudge Ramos, São Bernardo do Campo',
+  ogAlt: `Noren índigo com o kanji 鮨 e o nome ${cli.nome}, Rudge Ramos, São Bernardo do Campo`,
   // plus code do Google "8CWJ+4R Rudge Ramos" → 588M8CWJ+4R (precisão ~14 m)
   lat: -23.654688, lng: -46.567937,
   mapa: 'https://www.google.com/maps/search/?api=1&query=Sushi%20LM%2C%20R.%20Afonsina%2C%20244%20-%20Rudge%20Ramos%2C%20S%C3%A3o%20Bernardo%20do%20Campo%20-%20SP'
@@ -105,8 +112,18 @@ const jsonld = {
   hasMap: SEO.mapa,
   telephone: '+55 11 94032-0412',
   amenityFeature: ['Refeição no local', 'Retirada na porta', 'Entrega sem contato'].map(n => ({ '@type': 'LocationFeatureSpecification', name: n, value: true })),
-  ...(DOM ? { url: abs(''), image: abs(SEO.ogImagem) } : {})
+  ...cli.ld,
+  ...(DOM ? { url: abs(''), image: abs(SEO.ogImagem), ...(cli.logoLD ? { logo: abs(cli.logoLD) } : {}) } : {})
 };
+const ldFalta = [
+  !cli.ld.priceRange && 'priceRange (Google: "R$ 80–100 por pessoa", informado por usuários, não é preço oficial)',
+  !cli.ld.openingHoursSpecification && 'openingHoursSpecification (só "fecha 15:30 · reabre 18:30" de um único dia)',
+  !('acceptsReservations' in cli.ld) && 'acceptsReservations',
+  !cli.ld.hasMenu && 'hasMenu',
+  !cli.ld.sameAs && 'sameAs (Instagram)',
+  !cli.logoLD && 'logo',
+  !cliCfg.nome?.oficial && 'alternateName ("L&amp;M" no logo × "LM" no Google)'
+].filter(Boolean);
 const seoDependeDominio = [
   `<link rel="canonical" href="${DOM ? abs('') : 'https://SEU-DOMINIO/'}">`,
   `<meta property="og:url" content="${DOM ? abs('') : 'https://SEU-DOMINIO/'}">`,
@@ -119,10 +136,10 @@ const seoDependeDominio = [
   `<meta name="twitter:image:alt" content="${esc(SEO.ogAlt)}">`
 ];
 const seoHead = [
-  ...(DOM ? seoDependeDominio : [`<!-- Aguardando o domínio (seo.config.json → "dominio"). Rodar node scripts/build.mjs depois de preencher:\n${seoDependeDominio.map(l => '  ' + l.replace(/--/g, '&#45;&#45;')).join('\n')}\n-->`]),
+  ...(DOM ? seoDependeDominio : [`<!-- Aguardando o domínio (cliente.config.json → "dominio"). Rodar node scripts/build.mjs depois de preencher:\n${seoDependeDominio.map(l => '  ' + l.replace(/--/g, '&#45;&#45;')).join('\n')}\n-->`]),
   `<meta property="og:type" content="website">`,
   `<meta property="og:locale" content="pt_BR">`,
-  `<meta property="og:site_name" content="${SEO.nome}">`,
+  `<meta property="og:site_name" content="${esc(SEO.nome)}">`,
   `<meta property="og:title" content="${esc(SEO.titulo)}">`,
   `<meta property="og:description" content="${esc(SEO.descricao)}">`,
   `<meta name="twitter:card" content="summary_large_image">`,
@@ -136,21 +153,19 @@ const seoHead = [
   `<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">`,
   `<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">`,
   `<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">`,
-  `<!-- JSON-LD: só dado confirmado no CLIENTE.md. NÃO publicados até o cliente confirmar (DESIGN.md §i):
-  priceRange (Google: "R$ 80–100 por pessoa", informado por usuários, não é preço oficial) ·
-  openingHoursSpecification (só "fecha 15:30 · reabre 18:30" de um único dia) ·
-  acceptsReservations · hasMenu (link wa.me incompleto) · sameAs (Instagram) · logo e alternateName ("L&amp;M" no logo × "LM" no Google).
+  `<!-- JSON-LD: só dado confirmado (CLIENTE.md + cliente.config.json).${ldFalta.length ? `
+  Ainda NÃO publicados (preencher cliente.config.json): ${ldFalta.join(' · ')}.` : ''}
   aggregateRating: omitido de propósito (avaliações de terceiros não se marcam no próprio site). -->`,
   `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`
 ].join('\n');
 
 // robots, sitemap, manifest
-writeFileSync(resolve(SITE, 'robots.txt'), `User-agent: *\nAllow: /\n\n${DOM ? `Sitemap: ${abs('sitemap.xml')}` : '# Sitemap: https://SEU-DOMINIO/sitemap.xml   (ativa sozinho quando seo.config.json tiver o domínio)'}\n`);
+writeFileSync(resolve(SITE, 'robots.txt'), `User-agent: *\nAllow: /\n\n${DOM ? `Sitemap: ${abs('sitemap.xml')}` : '# Sitemap: https://SEU-DOMINIO/sitemap.xml   (ativa sozinho quando cliente.config.json tiver o domínio)'}\n`);
 writeFileSync(resolve(SITE, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${DOM
   ? `  <url>\n    <loc>${abs('')}</loc>\n    <lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>\n  </url>\n`
-  : '  <!-- Sem URL até existir o domínio (seo.config.json). O sitemap exige endereço absoluto. -->\n'}</urlset>\n`);
+  : '  <!-- Sem URL até existir o domínio (cliente.config.json). O sitemap exige endereço absoluto. -->\n'}</urlset>\n`);
 writeFileSync(resolve(SITE, 'site.webmanifest'), JSON.stringify({
-  name: 'Sushi LM — Restaurante japonês', short_name: 'Sushi LM', lang: 'pt-BR',
+  name: `${cli.nome} — Restaurante japonês`, short_name: cli.nome, lang: 'pt-BR',
   start_url: './', scope: './', display: 'browser',
   background_color: '#061626', theme_color: '#0A1D31',
   icons: [
@@ -166,7 +181,7 @@ const head = [
   `<noscript><link rel="stylesheet" href="${cssHref}"></noscript>`,
   `<script src="js/motion-boot.min.js?v=${hash(bootMin)}" defer></script>`
 ].join('\n');
-const html = ler('index.html').replace(/<!-- build:head[^>]*-->/, head).replace(/<!-- build:seo[^>]*-->/, seoHead);
+const html = cli.html.replace(/<!-- build:head[^>]*-->/, () => head).replace(/<!-- build:seo[^>]*-->/, () => seoHead);
 if (/build:(head|seo)/.test(html)) throw new Error('marcador build:head/build:seo não substituído');
 writeFileSync(resolve(SITE, 'index.html'), html);
 
@@ -180,3 +195,9 @@ linha('js/motion-boot.min.js', bootMin, ler('js/motion-boot.js'));
 linha('js/motion.min.js', motion, ler('js/motion.js'));
 for (const v of ['gsap.min.js', 'ScrollTrigger.min.js', 'lenis.min.js']) linha(`js/vendor/${v}`, readFileSync(resolve(SITE, 'js/vendor', v)));
 for (const f of FONTES) console.log(`${f.padEnd(34)} ${kb(statSync(resolve(SITE, f)).size).padStart(10)}  (woff2, já comprimido)`);
+
+// ── Pendências do cliente ─────────────────────────────────────────────
+const lista = cli.pend.map(p => `  - ${p}`).join('\n');
+console.log(cli.pend.length
+  ? `\nPENDÊNCIAS DO CLIENTE (${cli.pend.length}) — NÃO publicar enquanto houver itens que bloqueiam:\n${lista}`
+  : '\nSem pendências do cliente.');

@@ -76,3 +76,23 @@
 - Title (64) e description (148) sem nota/preço/horário. OG/Twitter com imagem 1200×630 do hero sem foto. Ícones do 鮨 (ico, png, apple, maskable), `site.webmanifest`, `robots.txt`, `sitemap.xml`. Manifest só em http(s) (evita erro de CORS em file://).
 - Semântica: 1 h1, h2/h3 em ordem, h2 oculto "Contato" no rodapé, alt na foto do hero.
 - Testes: `node scripts/seo-test.mjs` (30/30), visual 0,000/0,139 %, sem JS idêntico, auditoria 17/17, motion verde. Lighthouse: Perf 90 · A11y 100 · BP 100 · SEO 100.
+
+## Entrega final ✅ (tag v1.0-entrega)
+### Rodada completa
+- `npm test` (Chromium): 112/112 — visual 0,000/0,139 %, sem JS idêntico, auditoria 20/20 (15 telas de 320 a 5120 px + zoom 200%, sem fontes, reduced+dark), motion global + 8 seções, orçamento, SEO 30/30, config de cliente preenchido.
+- `npm run test:webkit`: 98/98 (auditoria 20/20, motion global, SEO).
+- Lighthouse mobile (mediana de 5): Perf 90 (90·90·90·90·91) · A11y 100 · BP 100 · SEO 100 · FCP 1,16 s · LCP 3,61 s · TBT 38 ms · CLS 0 · SI 1,89 s. Com gzip: 90.
+### Dados do cliente centralizados
+- `cliente.config.json` (substitui `seo.config.json`): domínio, nome, WhatsApp/reserva, preço, horários, links, autorizações, pratos, logo. `scripts/cliente.mjs` aplica ao HTML e ao JSON-LD; com tudo null o HTML é idêntico ao anterior (fora comentários). Build lista as pendências. `PENDENCIAS-CLIENTE.md`.
+### Polimento feito agora (baixo risco, medido)
+- Pausa lembrada também dispensa a abertura do hero (8 → 0 animações; console limpo).
+- `<meta name="color-scheme" content="only light">`.
+- Telas > 2560 px: página limitada a 160rem e centralizada (fotos de 1080 px ficavam 4,7× ampliadas em 5120). 2560/1920/1440: 0,000 %.
+- Horário (quando preenchido) em caixa baixa; `index.html` legado movido para `design/legado/`; `npm test`/`test:webkit`; auditoria devolve código de erro.
+### Aguarda feedback do cliente/usuário
+- Tempo até o nome aparecer no hero (~1,9 s) · abrir também as cortinas do Convite · shibori mais gráfico que o mockup (plate P1 opcional).
+- Fotos: Mesa (1080 px) e Salão (640 px, desfocado) moles em telas grandes; triângulos escuros no Convite ≥ 1920; mesmo prato em Rodízio e Cozinha (falta foto de sushiman); shimeji sem foto.
+- Favicon/ícones com 鮨 até chegar o logo em vetor; imagem de compartilhamento sem foto até a autorização.
+- Lighthouse 90: subir exige recomprimir fotos do cliente (decisão visual).
+### Aguarda aparelho real
+- ROTEIRO-APARELHO-REAL.md.
